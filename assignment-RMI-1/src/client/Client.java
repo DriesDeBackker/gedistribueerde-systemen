@@ -1,10 +1,14 @@
 package client;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
 
+import rental.ICarRentalCompany;
 import rental.Quote;
 import rental.Reservation;
+import rental.ReservationConstraints;
 
 public class Client extends AbstractTestBooking {
 	
@@ -16,18 +20,24 @@ public class Client extends AbstractTestBooking {
 		
 		String carRentalCompanyName = "Hertz";
 		
+		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+		ICarRentalCompany crc = (ICarRentalCompany) registry.lookup(carRentalCompanyName);
+		
 		// An example reservation scenario on car rental company 'Hertz' would be...
-		Client client = new Client("simpleTrips", carRentalCompanyName);
+		Client client = new Client("simpleTrips", crc);
 		client.run();
 	}
+
+	private ICarRentalCompany crc;
+
 	
 	/***************
 	 * CONSTRUCTOR *
 	 ***************/
 	
-	public Client(String scriptFile, String carRentalCompanyName) {
+	public Client(String scriptFile, ICarRentalCompany crc) {
 		super(scriptFile);
-		// TODO Auto-generated method stub
+		this.crc = crc;
 		throw new UnsupportedOperationException("TODO");
 	}
 	
@@ -44,8 +54,11 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected void checkForAvailableCarTypes(Date start, Date end) throws Exception {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("TODO");
+		try {
+			this.crc.getAvailableCarTypes(start, end);
+		} catch(Exception e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	/**
@@ -67,10 +80,15 @@ public class Client extends AbstractTestBooking {
 	 * 			if things go wrong, throw exception
 	 */
 	@Override
-	protected Quote createQuote(String clientName, Date start, Date end,
+	protected Quote createQuote(String clientName, Date start, Date end, 
 			String carType, String region) throws Exception {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("TODO");
+		ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
+		try {
+			return this.crc.createQuote(constraints, clientName);
+		} catch(Exception e) {
+			throw new UnsupportedOperationException();
+		}
+		
 	}
 
 	/**
@@ -85,8 +103,11 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected Reservation confirmQuote(Quote quote) throws Exception {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("TODO");
+		try {
+			return this.crc.confirmQuote(quote);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 	
 	/**

@@ -20,7 +20,7 @@ public class RentalServer {
 		CarRentalCompany crc = new CarRentalCompany(data.name, data.regions, data.cars);
 		ICarRentalCompany stub = (ICarRentalCompany) UnicastRemoteObject.exportObject(crc, 0);
 		Registry registry = LocateRegistry.getRegistry();
-		registry.rebind("car-rental-company", stub);
+		registry.rebind("Hertz", stub);
 	}
 
 	public static CrcData loadData(String datafile)
