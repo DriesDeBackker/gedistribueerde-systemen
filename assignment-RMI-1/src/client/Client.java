@@ -109,7 +109,9 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected Reservation confirmQuote(Quote quote) throws Exception {
 		try {
-			return this.crc.confirmQuote(quote);
+			Reservation reservation = this.crc.confirmQuote(quote);
+			System.out.println(reservation.toString());
+			return reservation;
 		} catch (Exception e) {
 			throw new UnsupportedOperationException();
 		}
