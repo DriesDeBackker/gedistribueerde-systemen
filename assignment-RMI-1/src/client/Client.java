@@ -4,7 +4,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import rental.CarType;
 import rental.ICarRentalCompany;
 import rental.Quote;
 import rental.Reservation;
@@ -55,7 +57,8 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected void checkForAvailableCarTypes(Date start, Date end) throws Exception {
 		try {
-			this.crc.getAvailableCarTypes(start, end);
+			Set<CarType> carTypes = this.crc.getAvailableCarTypes(start, end);
+			carTypes.forEach(carType -> System.out.println(carType.toString()));
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();
 		}
@@ -84,7 +87,9 @@ public class Client extends AbstractTestBooking {
 			String carType, String region) throws Exception {
 		ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
 		try {
-			return this.crc.createQuote(constraints, clientName);
+			Quote quote = this.crc.createQuote(constraints, clientName);
+			System.out.println(quote.toString());
+			return quote;
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();
 		}

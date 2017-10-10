@@ -3,9 +3,7 @@ package rental;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 public interface ICarRentalCompany extends Remote {
