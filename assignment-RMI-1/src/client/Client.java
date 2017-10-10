@@ -40,7 +40,6 @@ public class Client extends AbstractTestBooking {
 	public Client(String scriptFile, ICarRentalCompany crc) {
 		super(scriptFile);
 		this.crc = crc;
-		throw new UnsupportedOperationException("TODO");
 	}
 	
 	/**
@@ -91,7 +90,7 @@ public class Client extends AbstractTestBooking {
 			System.out.println(quote.toString());
 			return quote;
 		} catch(Exception e) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(e.toString());
 		}
 		
 	}
@@ -130,7 +129,7 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected List<Reservation> getReservationsByRenter(String clientName) throws Exception {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("TODO");
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -146,6 +145,6 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected int getNumberOfReservationsForCarType(String carType) throws Exception {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("TODO");
+		throw new UnsupportedOperationException();
 	}
 }

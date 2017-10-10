@@ -12,11 +12,12 @@ public interface ICarRentalCompany extends Remote {
 			throws RemoteException;
 	
 	public Quote createQuote(ReservationConstraints constraints, String client)
-			throws ReservationException;
+			throws RemoteException, ReservationException;
 	
 	public Reservation confirmQuote(Quote quote)
-			throws ReservationException;
+			throws RemoteException, ReservationException;
 	
-	public void cancelReservation(Reservation res);
+	public void cancelReservation(Reservation res) 
+			throws RemoteException;
 			
 }
