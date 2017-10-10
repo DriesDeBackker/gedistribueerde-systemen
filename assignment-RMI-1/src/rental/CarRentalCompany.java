@@ -1,5 +1,6 @@
 package rental;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -179,4 +180,27 @@ public class CarRentalCompany implements ICarRentalCompany {
 		return out.toString();
 	}
 	
+	public List<Reservation> getRenterReservations(String clientname){
+		List<Reservation> list = new ArrayList<Reservation>();
+		for (Car car : cars) {
+			for(Reservation res : car.getReservations()) {
+				if (res.getCarRenter().equals(clientname)) {
+					list.add(res);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public int getNumberOfReservationsForCarType(String carType) {
+		int n = 0;
+		for (Car car : cars) {
+			if (car.getType().getName().equals(carType)) {
+				if (!car.getReservations().isEmpty()) {
+					n += car.getReservations().size();
+				}
+			}
+		}
+		return n;
+	}
 }

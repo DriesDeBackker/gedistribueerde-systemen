@@ -128,8 +128,15 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected List<Reservation> getReservationsByRenter(String clientName) throws Exception {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		try {
+			List<Reservation> list = this.crc.getRenterReservations(clientName);
+			for (Reservation res : list) {
+				System.out.println(res);
+			}
+			return list;
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	/**
@@ -144,7 +151,11 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected int getNumberOfReservationsForCarType(String carType) throws Exception {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		try {
+			int number = this.crc.getNumberOfReservationsForCarType(carType);
+			return number;
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 }

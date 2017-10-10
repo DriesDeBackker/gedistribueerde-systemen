@@ -44,7 +44,7 @@ public class Car {
         if(!start.before(end))
             throw new IllegalArgumentException("Illegal given period");
 
-        for(Reservation reservation : reservations) {
+        for(Reservation reservation : getReservations()) {
             if(reservation.getEndDate().before(start) || reservation.getStartDate().after(end))
                 continue;
             return false;
@@ -53,11 +53,15 @@ public class Car {
     }
     
     public void addReservation(Reservation res) {
-        reservations.add(res);
+        getReservations().add(res);
     }
     
     public void removeReservation(Reservation reservation) {
         // equals-method for Reservation is required!
-        reservations.remove(reservation);
+        getReservations().remove(reservation);
     }
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
 }
