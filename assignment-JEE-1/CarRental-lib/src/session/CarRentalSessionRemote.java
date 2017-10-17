@@ -10,12 +10,12 @@ import rental.ReservationException;
 @Remote
 public interface CarRentalSessionRemote {
 
-    Set<String> getAllRentalCompanies();
+    public Set<String> getAllRentalCompanies();
     
-    Quote createQuote(ReservationConstraints constraints);
+    public Quote createQuote(ReservationConstraints constraints)throws ReservationException;
     
-    Set<Quote> getCurrentQuotes();
+    public Set<Quote> getCurrentQuotes();
     
-    void confirmQuotes(Set<Quote> quotes) throws ReservationException;
+    public void confirmQuotes(Set<Quote> quotes) throws ReservationException;
     
 }
