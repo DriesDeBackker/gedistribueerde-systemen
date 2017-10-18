@@ -17,6 +17,12 @@ public class CarRentalSession implements CarRentalSessionRemote {
 
     private Set<Quote> quotes;
     private Set<Reservation> reservations;
+    private String name;
+    
+    @Override
+    public void setName(String name){
+        this.name = name;
+    }
     
     @Override
     public Set<String> getAllRentalCompanies() {
@@ -26,7 +32,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     @Override
     public Quote createQuote(ReservationConstraints constraints) throws ReservationException{
         Map<String, CarRentalCompany> rentals = RentalStore.getRentals();
-        CarRentalCompany company = null;
+        Quote quote = null;
         Set<String> rentalNames = rentals.keySet();
         boolean found = false;
         Iterator<String> iterator = rentalNames.iterator();
@@ -35,14 +41,14 @@ public class CarRentalSession implements CarRentalSessionRemote {
             if(rentalCompany.hasRegion(constraints.getRegion())
                 && rentalCompany.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate())) {
                 found = true;
-                company = rentalCompany;
+                CarRentalCompany company = rentalCompany;
+                quote = company.createQuote(constraints, name);
+                this.quotes.add(quote);
             }
         }
         if (found == false){
         throw new ReservationException("> No cars available to satisfy the given constraints.");
         }
-        Quote quote = company.createQuote(constraints, "guest");
-        this.quotes.add(quote);
         return quote;
     }
 
