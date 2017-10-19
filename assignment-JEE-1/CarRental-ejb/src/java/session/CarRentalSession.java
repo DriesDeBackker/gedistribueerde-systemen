@@ -1,11 +1,15 @@
 package session;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.ejb.Stateful;
 import rental.CarRentalCompany;
+import rental.CarType;
 import rental.Quote;
 import rental.RentalStore;
 import rental.Reservation;
@@ -18,6 +22,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     private Set<Quote> quotes;
     private Set<Reservation> reservations;
     private String name;
+    private Set<CarType> availableCarTypes;
     
     @Override
     public void setName(String name){
@@ -59,7 +64,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public void confirmQuotes(Set<Quote> quotes) throws ReservationException {
+    public void confirmQuotes() throws ReservationException {
         Iterator<Quote> iterator = quotes.iterator();
         while(iterator.hasNext()) {
             Quote quote = iterator.next();
@@ -77,5 +82,18 @@ public class CarRentalSession implements CarRentalSessionRemote {
             }
         }
     } 
+
+    @Override
+    public void checkForAvailableCarTypes(Date start, Date end) throws UnsupportedOperationException {
+        try{
+            List<CarType> carTypes = new ArrayList<CarType>();
+            for(CarRentalCompany company : RentalStore.getRentals().values()){
+                carTypes.addAll(company.getAvailableCarTypes(start, end));
+            }
+            availableCarTypes = new HashSet<CarType>(carTypes);
+        }catch(Exception e){
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
         
 }

@@ -47,13 +47,14 @@ public class ManagerSession implements ManagerSessionRemote {
     }
 
     @Override
-    public int getNumberReservations(CarType type, String companyName) {
+    public int getNumberReservations(String carType, String companyName) {
         try {
+            
             CarRentalCompany company = RentalStore.getRental(companyName);
             List<Car> cars = company.getCars();
             int numberOfReservations = 0;
             for(Car car: cars) {
-                if (car.getType() == type){
+                if (car.getType().getName() == carType){
                     numberOfReservations += car.getAllReservations().size();
                 }
             }
