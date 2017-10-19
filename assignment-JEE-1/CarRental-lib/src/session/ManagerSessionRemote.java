@@ -17,8 +17,8 @@ import rental.CarType;
 public interface ManagerSessionRemote {
     
     public void setName(String name);
-    
-    public void setCarRentalCompany(String name);
+   
+    public void setRentalCompany(String name);
     
     public List<CarType> getCarTypesCompany(String companyName);
     
@@ -26,5 +26,5 @@ public interface ManagerSessionRemote {
     
     public String getBestClient(String companyName);
     
-    public void setCompanyName(String name);
+    
 }

@@ -8,6 +8,7 @@ package session;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,14 +28,14 @@ import rental.Reservation;
 public class ManagerSession implements ManagerSessionRemote {
     
     private String name;
-    private String companyName;
+    private CarRentalCompany rentalCompany;
     
     public void setName(String newName){
         name = newName;
     }
     
-    public void setCarRentalCompany(String companyName){
-        company = RentalStore.getRentals().get(companyName);
+    public void setRentalCompany(String companyName){
+        rentalCompany = RentalStore.getRentals().get(companyName);
     }
 
     @Override
@@ -87,5 +88,4 @@ public class ManagerSession implements ManagerSessionRemote {
             throw new UnsupportedOperationException(e.toString()); 
         }
     }
-
 }
