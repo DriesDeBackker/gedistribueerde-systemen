@@ -27,7 +27,7 @@ import rental.Reservation;
 public class ManagerSession implements ManagerSessionRemote {
     
     private String name;
-    private CarRentalCompany company;
+    private String companyName;
     
     public void setName(String newName){
         name = newName;
@@ -57,7 +57,7 @@ public class ManagerSession implements ManagerSessionRemote {
             List<Car> cars = company.getCars();
             int numberOfReservations = 0;
             for(Car car: cars) {
-                if (car.getType().getName() == carType){
+                if (car.getType().getName().equals(carType)){
                     numberOfReservations += car.getAllReservations().size();
                 }
             }
@@ -68,42 +68,21 @@ public class ManagerSession implements ManagerSessionRemote {
     }
 
     @Override
-    public String getBestClient() {
+    public String getBestClient(String companyName) {
         try {
-            //Add all the rental companies to a list.
-            List<CarRentalCompany> companies = new ArrayList();
-            companies.addAll(RentalStore.getRentals().values());
-            //Add all cars of all companies to a list.
-            List<Car> cars = new ArrayList();
-            for(CarRentalCompany company : companies) {
-                cars.addAll(company.getCars());
+            CarRentalCompany company = RentalStore.getRental(companyName);
+            Set<String> clients = company.getClients();
+            String bestClient = null;
+            int reservations = 0;
+            Iterator<String> iterator = clients.iterator();
+            while(iterator.hasNext()) {
+                String client = iterator.next();
+                int res = company.getReservationsBy(client).size();
+                if (res > reservations){
+                    bestClient = client;
+                    }
             }
-            //Add all reservations of all cars to a list.
-            List<Reservation> reservations = new ArrayList();
-            for(Car car : cars){
-                reservations.addAll(car.getAllReservations());
-            }
-            //Compute for each customer his/her number of total reservations
-            // and put that information in a map.
-            HashMap<String, Integer> reservationsPerCustomer = new HashMap<String, Integer>();
-            for(Reservation reservation : reservations) {
-                String customer = reservation.getCarRenter();
-                if (reservationsPerCustomer.containsKey(customer)){
-                    reservationsPerCustomer.put(customer, reservationsPerCustomer.get(customer)+1);
-                }else{
-                    reservationsPerCustomer.put(customer,1);
-                }
-            }
-            //Iterate over the map to find the customer with the most reservations.
-            String bestCustomer = null;
-            int mostReservations = 0;
-            for(String customer : reservationsPerCustomer.keySet()){
-                if (reservationsPerCustomer.get(customer) > mostReservations){
-                    bestCustomer = customer;
-                    mostReservations = reservationsPerCustomer.get(customer);
-                }
-            }
-            return bestCustomer;
+            return bestClient;
         } catch (Exception e) {
             throw new UnsupportedOperationException(e.toString()); 
         }
