@@ -16,6 +16,10 @@ import rental.CarType;
 @Remote
 public interface ManagerSessionRemote {
     
+    public void setName(String name);
+    
+    public void setCarRentalCompany(String name);
+    
     public List<CarType> getCarTypesCompany(String companyName);
     
     public int getNumberReservations(String carType, String companyName);

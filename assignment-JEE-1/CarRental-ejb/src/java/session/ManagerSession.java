@@ -25,6 +25,17 @@ import rental.Reservation;
  */
 @Stateless
 public class ManagerSession implements ManagerSessionRemote {
+    
+    private String name;
+    private CarRentalCompany company;
+    
+    public void setName(String newName){
+        name = newName;
+    }
+    
+    public void setCarRentalCompany(String companyName){
+        company = RentalStore.getRentals().get(companyName);
+    }
 
     @Override
     public List<CarType> getCarTypesCompany(String companyName) {

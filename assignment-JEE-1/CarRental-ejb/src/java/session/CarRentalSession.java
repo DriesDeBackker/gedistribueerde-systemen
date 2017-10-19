@@ -64,7 +64,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public void confirmQuotes() throws ReservationException {
+    public List<Reservation> confirmQuotes() throws ReservationException {
         Iterator<Quote> iterator = quotes.iterator();
         while(iterator.hasNext()) {
             Quote quote = iterator.next();
@@ -81,6 +81,9 @@ public class CarRentalSession implements CarRentalSessionRemote {
                 throw new ReservationException("Error while making reservations, all are cancelled");
             }
         }
+        List<Reservation> reservationlist = new ArrayList<Reservation>();
+        reservationlist.addAll(reservations);
+        return reservationlist;
     } 
 
     @Override
