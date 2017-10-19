@@ -1,5 +1,6 @@
 package session;
 
+import java.util.Date;
 import java.util.Set;
 import javax.ejb.Remote;
 
@@ -14,10 +15,12 @@ public interface CarRentalSessionRemote {
     
     public Set<String> getAllRentalCompanies();
     
+    public void checkForAvailableCarTypes(Date start, Date end);
+    
     public Quote createQuote(ReservationConstraints constraints)throws ReservationException;
     
     public Set<Quote> getCurrentQuotes();
     
-    public void confirmQuotes(Set<Quote> quotes) throws ReservationException;
+    public void confirmQuotes() throws ReservationException;
     
 }

@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import session.CarRentalSessionRemote;
+import session.ManagerSessionRemote;
 
 public class Main extends AbstractTestAgency{
     
     @EJB
     static CarRentalSessionRemote session;
+    static ManagerSessionRemote managerSession;
     /**
      * @param args the command line arguments
      */
@@ -22,7 +24,8 @@ public class Main extends AbstractTestAgency{
 
     @Override
     protected Object getNewReservationSession(String name) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return new CarRentalSession():
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -32,6 +35,8 @@ public class Main extends AbstractTestAgency{
 
     @Override
     protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
+        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
+        rs.checkForAvailableCarTypes(start, end);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -42,11 +47,19 @@ public class Main extends AbstractTestAgency{
 
     @Override
     protected List confirmQuotes(Object session, String name) throws Exception {
+        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
+        rs.confirmQuotes();
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    protected int getNumberOfReservationsForCarType(Object ms, String carRentalName, String carType) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected int getNumberOfReservationsForCarType(Object session, String carRentalName, String carType) throws Exception {
+        try {
+            ManagerSessionRemote ms = (ManagerSessionRemote)session;
+            return ms.getNumberReservations(carType, carRentalName);
+        }catch(Exception e) {
+            throw new UnsupportedOperationException(e.toString());
+        }
+         //To change body of generated methods, choose Tools | Templates.
     }
 }
