@@ -6,19 +6,14 @@
 package session;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import rental.Car;
 import rental.CarRentalCompany;
 import rental.CarType;
 import rental.RentalStore;
-import rental.Reservation;
 
 /**
  *
@@ -54,7 +49,7 @@ public class ManagerSession implements ManagerSessionRemote {
             List<Car> cars = company.getCars();
             int numberOfReservations = 0;
             for(Car car: cars) {
-                if (car.getType().getName() == carType){
+                if (car.getType().getName().equals(carType)){
                     numberOfReservations += car.getAllReservations().size();
                 }
             }
