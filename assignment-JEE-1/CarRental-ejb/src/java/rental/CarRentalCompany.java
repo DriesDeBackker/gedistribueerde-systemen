@@ -19,6 +19,7 @@ public class CarRentalCompany {
 	private String name;
 	private List<Car> cars;
 	private Map<String,CarType> carTypes;
+        private Set<String> Clients;
 
 	/***************
 	 * CONSTRUCTOR *
@@ -154,6 +155,7 @@ public class CarRentalCompany {
 		
 		Reservation res = new Reservation(quote, car.getId());
 		car.addReservation(res);
+                addClient(quote.getCarRenter());
 		return res;
 	}
 
@@ -172,5 +174,13 @@ public class CarRentalCompany {
             }
         }
         return out;
-    }
+        }
+        
+        public void addClient(String client){
+        this.Clients.add(client);
+        }
+        
+        public Set<String> getClients(){
+        return this.Clients;
+        }
 }
