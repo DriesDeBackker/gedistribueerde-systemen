@@ -69,16 +69,21 @@ public class CarRentalSession implements CarRentalSessionRemote {
         while(iterator.hasNext()) {
             Quote quote = iterator.next();
             CarRentalCompany company = RentalStore.getRental(quote.getRentalCompany());
-            try{
+            //try{
                 reservations.add(company.confirmQuote(quote));
-            }
+            //}
+            /**
             catch(ReservationException e){
-                Iterator<Reservation> iterator2 = reservations.iterator();
-                while(iterator2.hasNext()) {
-                    Reservation res = iterator2.next();
+                System.out.println("here");
+                int i = reservations.size()-1;
+                while(reservations.size() > 0) {
+                    Reservation res = reservations.get(i);
                     company.cancelReservation(res);
+                    reservations.remove(i);
+                    i -=  1;
                 }
             }
+            **/
         }
         return this.reservations;
     } 
