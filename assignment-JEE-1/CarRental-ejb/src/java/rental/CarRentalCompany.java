@@ -148,15 +148,19 @@ public class CarRentalCompany {
 	public Reservation confirmQuote(Quote quote) throws ReservationException {
 		logger.log(Level.INFO, "<{0}> Reservation of {1}", new Object[]{name, quote.toString()});
 		List<Car> availableCars = getAvailableCars(quote.getCarType(), quote.getStartDate(), quote.getEndDate());
-		if(availableCars.isEmpty())
+		if(availableCars.isEmpty()){
+                    System.out.println("here1");
 			throw new ReservationException("Reservation failed, all cars of type " + quote.getCarType()
 	                + " are unavailable from " + quote.getStartDate() + " to " + quote.getEndDate());
+                }
+                else{
+                System.out.println("here2");
 		Car car = availableCars.get((int)(Math.random()*availableCars.size()));
-		
 		Reservation res = new Reservation(quote, car.getId());
 		car.addReservation(res);
                 addClient(quote.getCarRenter());
 		return res;
+                }
 	}
 
 	public void cancelReservation(Reservation res) {
