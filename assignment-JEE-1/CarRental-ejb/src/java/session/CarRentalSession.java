@@ -20,7 +20,7 @@ import rental.ReservationException;
 public class CarRentalSession implements CarRentalSessionRemote {
 
     private Set<Quote> quotes;
-    private Set<Reservation> reservations;
+    private List<Reservation> reservations;
     private String name;
     private Set<CarType> availableCarTypes;
     
@@ -47,7 +47,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
                 && rentalCompany.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate())) {
                 found = true;
                 CarRentalCompany company = rentalCompany;
-                quote = company.createQuote(constraints, name);
+                quote = company.createQuote(constraints, this.name);
                 this.quotes.add(quote);
             }
         }
@@ -64,7 +64,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public void confirmQuotes() throws ReservationException {
+    public List<Reservation> confirmQuotes() throws ReservationException {
         Iterator<Quote> iterator = quotes.iterator();
         while(iterator.hasNext()) {
             Quote quote = iterator.next();
@@ -81,19 +81,21 @@ public class CarRentalSession implements CarRentalSessionRemote {
                 throw new ReservationException("Error while making reservations, all are cancelled");
             }
         }
+        return this.reservations;
     } 
 
     @Override
     public void checkForAvailableCarTypes(Date start, Date end) throws UnsupportedOperationException {
-        try{
-            List<CarType> carTypes = new ArrayList<CarType>();
-            for(CarRentalCompany company : RentalStore.getRentals().values()){
-                carTypes.addAll(company.getAvailableCarTypes(start, end));
-            }
-            availableCarTypes = new HashSet<CarType>(carTypes);
-        }catch(Exception e){
-            throw new UnsupportedOperationException("Not supported yet.");
+        List<CarType> carTypes = new ArrayList<CarType>();
+        for(CarRentalCompany company : RentalStore.getRentals().values()){
+            carTypes.addAll(company.getAvailableCarTypes(start, end));
         }
+        availableCarTypes = new HashSet<CarType>(carTypes);
+    }
+
+    @Override
+    public ReservationConstraints createConstraints(Date start, Date end, String carType, String region) {
+        return new ReservationConstraints(start, end, carType, region);
     }
         
 }

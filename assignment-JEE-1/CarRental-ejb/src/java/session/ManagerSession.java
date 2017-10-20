@@ -23,10 +23,16 @@ import rental.RentalStore;
 public class ManagerSession implements ManagerSessionRemote {
     
     private String companyName;
+    private String name;
     
     @Override
     public void setCompanyName(String name){
         this.companyName = name;
+    }
+    
+    @Override
+    public void setName(String name){
+        this.name = name;
     }
 
     @Override

@@ -23,4 +23,6 @@ public interface ManagerSessionRemote {
     public String getBestClient(String companyName);
     
     public void setCompanyName(String name);
+    
+    public void setName(String name);
 }
