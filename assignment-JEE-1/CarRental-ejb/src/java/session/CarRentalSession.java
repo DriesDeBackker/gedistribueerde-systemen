@@ -82,6 +82,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
                     reservations.remove(i);
                     i -=  1;
                 }
+                throw new ReservationException("Confirmation of quotes failed.");
             }
             **/
         }
