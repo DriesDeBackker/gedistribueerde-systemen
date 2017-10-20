@@ -1,8 +1,9 @@
 package rental;
 
+
 import java.util.Date;
 
-public class Quote {
+public class Quote{
 
     private Date startDate;
     private Date endDate;

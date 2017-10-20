@@ -35,9 +35,8 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public Quote createQuote(ReservationConstraints constraints) throws ReservationException{
+    public void createQuote(ReservationConstraints constraints) throws ReservationException{
         Map<String, CarRentalCompany> rentals = RentalStore.getRentals();
-        Quote quote = null;
         Set<String> rentalNames = rentals.keySet();
         boolean found = false;
         Iterator<String> iterator = rentalNames.iterator();
@@ -47,14 +46,13 @@ public class CarRentalSession implements CarRentalSessionRemote {
                 && rentalCompany.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate())) {
                 found = true;
                 CarRentalCompany company = rentalCompany;
-                quote = company.createQuote(constraints, this.name);
+                Quote quote = company.createQuote(constraints, this.name);
                 this.quotes.add(quote);
             }
         }
         if (found == false){
         throw new ReservationException("> No cars available to satisfy the given constraints.");
         }
-        return quote;
     }
 
     
@@ -91,11 +89,6 @@ public class CarRentalSession implements CarRentalSessionRemote {
             carTypes.addAll(company.getAvailableCarTypes(start, end));
         }
         availableCarTypes = new HashSet<CarType>(carTypes);
-    }
-
-    @Override
-    public ReservationConstraints createConstraints(Date start, Date end, String carType, String region) {
-        return new ReservationConstraints(start, end, carType, region);
     }
         
 }

@@ -52,8 +52,7 @@ public class Main extends AbstractTestAgency{
     @Override
     protected void addQuoteToSession(Object session, String name, Date start, Date end, String carType, String region) throws Exception {
         CarRentalSessionRemote rs = (CarRentalSessionRemote)session;  
-        ReservationConstraints constraints = rs.createConstraints(start, end, carType, region);
-        rs.createQuote(constraints);
+        rs.createQuote(new ReservationConstraints(start, end, carType, region));
     }
 
     @Override

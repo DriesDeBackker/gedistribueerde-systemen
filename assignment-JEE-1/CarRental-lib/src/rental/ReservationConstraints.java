@@ -1,8 +1,10 @@
 package rental;
 
+
+
 import java.util.Date;
 
-public class ReservationConstraints {
+public class ReservationConstraints{
     
     private Date startDate;
     private Date endDate;
@@ -13,7 +15,7 @@ public class ReservationConstraints {
     	setStartDate(start);
     	setEndDate(end);
     	setCarType(carType);
-		setRegion(region);
+	setRegion(region);
     }
     
     public Date getStartDate() {

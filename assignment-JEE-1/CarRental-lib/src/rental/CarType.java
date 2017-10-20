@@ -1,6 +1,7 @@
 package rental;
 
-public class CarType {
+
+public class CarType{
     
     private String name;
     private int nbOfSeats;
