@@ -22,7 +22,7 @@ import rental.ReservationException;
 public class CarRentalSession implements CarRentalSessionRemote {
 
     private Set<Quote> quotes = new HashSet<Quote>();
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<Reservation>();
     private String name;
     private Set<CarType> availableCarTypes;
     
@@ -78,7 +78,6 @@ public class CarRentalSession implements CarRentalSessionRemote {
                     Reservation res = iterator2.next();
                     company.cancelReservation(res);
                 }
-                throw new ReservationException("Error while making reservations, all are cancelled");
             }
         }
         return this.reservations;

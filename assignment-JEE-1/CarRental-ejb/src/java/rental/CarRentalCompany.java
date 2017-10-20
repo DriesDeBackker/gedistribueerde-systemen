@@ -19,7 +19,7 @@ public class CarRentalCompany {
 	private String name;
 	private List<Car> cars;
 	private Map<String,CarType> carTypes;
-        private Set<String> Clients;
+        private Set<String> Clients = new HashSet<String>();
 
 	/***************
 	 * CONSTRUCTOR *

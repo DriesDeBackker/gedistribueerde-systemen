@@ -1,8 +1,10 @@
 package rental;
 
+import java.io.Serializable;
 
 
-public class Reservation extends Quote {
+
+public class Reservation extends Quote implements Serializable {
 
     private int carId;
     
