@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import rental.CarRentalCompany;
 import rental.CarType;
@@ -16,10 +17,11 @@ import rental.Reservation;
 import rental.ReservationConstraints;
 import rental.ReservationException;
 
+@Remote
 @Stateful
 public class CarRentalSession implements CarRentalSessionRemote {
 
-    private Set<Quote> quotes;
+    private Set<Quote> quotes = new HashSet<Quote>();
     private List<Reservation> reservations;
     private String name;
     private Set<CarType> availableCarTypes;
@@ -35,18 +37,18 @@ public class CarRentalSession implements CarRentalSessionRemote {
     }
     
     @Override
-    public void createQuote(ReservationConstraints constraints) throws ReservationException{
+    public void createQuote(Date start, Date end, String carType, String region) throws ReservationException{
+        ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
         Map<String, CarRentalCompany> rentals = RentalStore.getRentals();
         Set<String> rentalNames = rentals.keySet();
         boolean found = false;
         Iterator<String> iterator = rentalNames.iterator();
         while(! found && iterator.hasNext()) {
             CarRentalCompany rentalCompany = rentals.get(iterator.next());
-            if(rentalCompany.hasRegion(constraints.getRegion())
-                && rentalCompany.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate())) {
+            if((rentalCompany.hasRegion(constraints.getRegion()))
+                && (rentalCompany.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate()))) {
                 found = true;
-                CarRentalCompany company = rentalCompany;
-                Quote quote = company.createQuote(constraints, this.name);
+                Quote quote = rentalCompany.createQuote(constraints, this.name);
                 this.quotes.add(quote);
             }
         }

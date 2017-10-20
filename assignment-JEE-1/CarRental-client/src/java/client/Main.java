@@ -3,8 +3,6 @@ package client;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.naming.InitialContext;
-import rental.ReservationConstraints;
 import session.CarRentalSessionRemote;
 import session.ManagerSessionRemote;
 
@@ -12,6 +10,7 @@ public class Main extends AbstractTestAgency{
     
     @EJB
     static CarRentalSessionRemote session;
+    @EJB
     static ManagerSessionRemote managerSession;
     /**
      * @param args the command line arguments
@@ -28,16 +27,16 @@ public class Main extends AbstractTestAgency{
 
     @Override
     protected Object getNewReservationSession(String name) throws Exception {
-        InitialContext context = new InitialContext();
-        session = (CarRentalSessionRemote) context.lookup(CarRentalSessionRemote.class.getName());
+        //InitialContext context = new InitialContext();
+        //session = (CarRentalSessionRemote) context.lookup(CarRentalSessionRemote.class.getName());
         session.setName(name);
         return session;
     }
 
     @Override
     protected Object getNewManagerSession(String name, String carRentalName) throws Exception {
-        InitialContext context = new InitialContext();
-        managerSession = (ManagerSessionRemote) context.lookup(ManagerSessionRemote.class.getName());
+        //InitialContext context = new InitialContext();
+        //managerSession = (ManagerSessionRemote) context.lookup(ManagerSessionRemote.class.getName());
         managerSession.setName(name);
         managerSession.setCompanyName(carRentalName);
         return managerSession;
@@ -52,7 +51,7 @@ public class Main extends AbstractTestAgency{
     @Override
     protected void addQuoteToSession(Object session, String name, Date start, Date end, String carType, String region) throws Exception {
         CarRentalSessionRemote rs = (CarRentalSessionRemote)session;  
-        rs.createQuote(new ReservationConstraints(start, end, carType, region));
+        rs.createQuote(start, end, carType, region);
     }
 
     @Override
