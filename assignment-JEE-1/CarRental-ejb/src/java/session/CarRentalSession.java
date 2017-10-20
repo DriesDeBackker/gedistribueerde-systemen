@@ -78,6 +78,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
                     Reservation res = iterator2.next();
                     company.cancelReservation(res);
                 }
+                throw new ReservationException("Confirmation of quotes failed.");
             }
         }
         return this.reservations;
