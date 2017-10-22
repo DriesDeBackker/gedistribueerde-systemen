@@ -49,8 +49,7 @@ public class ManagerSession implements ManagerSessionRemote {
 
     @Override
     public int getNumberReservations(String carType, String companyName) {
-        try {
-            
+        try {            
             CarRentalCompany company = RentalStore.getRental(companyName);
             List<Car> cars = company.getCars();
             int numberOfReservations = 0;
