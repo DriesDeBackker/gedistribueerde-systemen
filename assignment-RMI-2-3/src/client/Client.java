@@ -8,10 +8,13 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import rental.CarType;
+import rental.ICarRentalAgency;
 import rental.ICarRentalCompany;
+import rental.ManagerSession;
 import rental.Quote;
 import rental.Reservation;
 import rental.ReservationConstraints;
+import rental.ReservationSession;
 
 public class Client extends AbstractTestManagement{
 	
@@ -21,26 +24,25 @@ public class Client extends AbstractTestManagement{
 	
 	public static void main(String[] args) throws Exception {
 		
-		String carRentalCompanyName = "Hertz";
+		String carRentalAgencyName = "agency";
 		
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-		ICarRentalCompany crc = (ICarRentalCompany) registry.lookup(carRentalCompanyName);
+		ICarRentalAgency cra = (ICarRentalAgency) registry.lookup(carRentalAgencyName);
 		
-		// An example reservation scenario on car rental company 'Hertz' would be...
-		Client client = new Client("simpleTrips", crc);
+		Client client = new Client("simpleTrips", cra);
 		client.run();
 	}
 
-	private ICarRentalCompany crc;
+	private ICarRentalAgency cra;
 
 	
 	/***************
 	 * CONSTRUCTOR *
 	 ***************/
 	
-	public Client(String scriptFile, ICarRentalCompany crc) {
+	public Client(String scriptFile, ICarRentalAgency cra) {
 		super(scriptFile);
-		this.crc = crc;
+		this.cra = cra;
 	}
 	
 
@@ -64,21 +66,29 @@ public class Client extends AbstractTestManagement{
 
 	@Override
 	protected Object getNewReservationSession(String name) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			ReservationSession newReservationSession = this.cra.getNewReservationSession(name);
+			return newReservationSession;
+		} catch(Exception e) {
+			throw new UnsupportedOperationException("Could not create a reservation session");
+		}
 	}
 
 	@Override
 	protected Object getNewManagerSession(String name, String carRentalName) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			ManagerSession newManagerSession = this.cra.getNewManagerSession(name, carRentalName);
+			return newManagerSession;
+		} catch(Exception e) {
+			throw new UnsupportedOperationException("Could not create a manager session");
+		}
 	}
 
 	@Override
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
 		//TODO: incorporate session.
 		try {
-			Set<CarType> carTypes = this.crc.getAvailableCarTypes(start, end);
+			Set<CarType> carTypes = this.cra.getAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();
@@ -92,7 +102,7 @@ public class Client extends AbstractTestManagement{
 			// TODO incorporate session
 			ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
 			try {
-				Quote quote = this.crc.createQuote(constraints, clientName);
+				Quote quote = this.cra.createQuote(constraints, clientName);
 				System.out.println(quote.toString());
 				return quote;
 			} catch(Exception e) {
@@ -110,7 +120,7 @@ public class Client extends AbstractTestManagement{
 	protected int getNumberOfReservationsForCarType(Object ms, String carRentalName, String carType) throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			int number = this.crc.getNumberOfReservationsForCarType(carType);
+			int number = this.cra.getNumberOfReservationsForCarType(carType);
 			return number;
 		} catch (Exception e) {
 			throw new UnsupportedOperationException();

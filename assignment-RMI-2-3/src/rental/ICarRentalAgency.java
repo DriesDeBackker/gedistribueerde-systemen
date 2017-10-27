@@ -7,9 +7,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public interface IManagerSession extends Remote {
+public interface ICarRentalAgency extends Remote {
 
 	public Set<CarType> getAvailableCarTypes(Date from, Date end) 
+			throws RemoteException;
+	
+	public ReservationSession getNewReservationSession(String name)
+			throws RemoteException;
+	
+	public ManagerSession getNewManagerSession(String name, String carRentalName)
 			throws RemoteException;
 	
 	public Quote createQuote(ReservationConstraints constraints, String client)

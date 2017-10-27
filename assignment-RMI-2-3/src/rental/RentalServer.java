@@ -16,11 +16,11 @@ public class RentalServer {
 	public static void main(String[] args) throws ReservationException,
 			NumberFormatException, IOException {
 		System.setSecurityManager(null);
-		CrcData data  = loadData("hertz.csv");
-		CarRentalCompany crc = new CarRentalCompany(data.name, data.regions, data.cars);
-		ICarRentalCompany stub = (ICarRentalCompany) UnicastRemoteObject.exportObject(crc, 0);
+		//CrcData data  = loadData("hertz.csv");
+		CarRentalAgency cra = new CarRentalAgency();
+		ICarRentalAgency stub = (ICarRentalAgency) UnicastRemoteObject.exportObject(cra, 0);
 		Registry registry = LocateRegistry.getRegistry();
-		registry.rebind("Hertz", stub);
+		registry.rebind("agency", stub);
 	}
 
 	public static CrcData loadData(String datafile)
