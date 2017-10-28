@@ -20,6 +20,14 @@ public class CarRentalAgency {
 		this.carRentalCompanies = new HashSet<CarRentalCompany>();
 	}
 	
+	public CarRentalCompany getCarRentalCompanyByName(String name) {
+		for(CarRentalCompany company : this.carRentalCompanies) {
+			if (company.getName() == name) {
+				return company;
+			}
+		} return null;
+	}
+	
 	//registers the car rental company with given name by loading it from a file
 	// and adding to the list the CarRentalCompany object created with the loaded data.
 	public void registerCarRentalCompany(String name) throws Exception{
@@ -33,15 +41,11 @@ public class CarRentalAgency {
 	}
 	
 	public void unregisterCarRentalCompany(String name) throws Exception {
-		boolean nothingFound = true;
-		for(CarRentalCompany company : this.carRentalCompanies) {
-			if (company.getName() == name) {
-				this.carRentalCompanies.remove(company);
-				nothingFound = false;
-				break;
-			}
-		} if (nothingFound) {
+		CarRentalCompany company = this.getCarRentalCompanyByName(name);
+		if (company == null) {
 			throw new Exception("Could not unregister the car rental company as it is not present.");
+		} else {
+			this.carRentalCompanies.remove(company);
 		}
 		
 	}
