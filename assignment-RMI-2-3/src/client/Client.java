@@ -9,6 +9,8 @@ import java.util.StringTokenizer;
 
 import rental.CarType;
 import rental.ICarRentalAgency;
+import rental.IManagerSession;
+import rental.IReservationSession;
 import rental.ManagerSession;
 import rental.Quote;
 import rental.Reservation;
@@ -46,15 +48,14 @@ public class Client extends AbstractTestManagement{
 
 	@Override
 	protected CarType getMostPopularCarTypeIn(Object ms, String carRentalCompanyName, int year) throws Exception {
-		ManagerSession managerSession = (ManagerSession)ms;
-		managerSession.getMostPopularCarTypeIn(carRentalCompanyName, year);
-		return null;
+		IManagerSession managerSession = (IManagerSession)ms;
+		return managerSession.getMostPopularCarTypeIn(carRentalCompanyName, year);
 	}
 
 	@Override
 	protected Object getNewReservationSession(String name) throws Exception {
 		try {
-			ReservationSession newReservationSession = this.cra.getNewReservationSession(name);
+			IReservationSession newReservationSession = this.cra.getNewReservationSession(name);
 			return newReservationSession;
 		} catch(Exception e) {
 			throw new UnsupportedOperationException("Could not create a reservation session");
@@ -64,7 +65,7 @@ public class Client extends AbstractTestManagement{
 	@Override
 	protected Object getNewManagerSession(String name, String carRentalName) throws Exception {
 		try {
-			ManagerSession newManagerSession = this.cra.getNewManagerSession(name, carRentalName);
+			IManagerSession newManagerSession = this.cra.getNewManagerSession(name, carRentalName);
 			return newManagerSession;
 		} catch(Exception e) {
 			throw new UnsupportedOperationException("Could not create a manager session");
@@ -73,10 +74,9 @@ public class Client extends AbstractTestManagement{
 	
 	@Override
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
-		//TODO: incorporate session.
 		try {
-			ReservationSession reservationSession = (ReservationSession)session;
-			Set<CarType> carTypes = reservationSession.checkForAvailableCarTypes(start, end);
+			IReservationSession reservationSession = (IReservationSession)session;
+			Set<CarType> carTypes = reservationSession.getAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();
@@ -87,29 +87,28 @@ public class Client extends AbstractTestManagement{
 	@Override
 	protected void addQuoteToSession(Object session, String name, Date start, Date end, String carType, String region)
 			throws Exception {
-			// TODO incorporate session
 			ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
 			try {
-				ReservationSession reservationSession = (ReservationSession)session;
-				Quote quote = reservationSession.createQuote(constraints, clientName);
+				IReservationSession reservationSession = (IReservationSession)session;
+				Quote quote = reservationSession.createQuote(constraints, name);
 				System.out.println(quote.toString());
-				return quote;
 			} catch(Exception e) {
 				throw new UnsupportedOperationException(e.toString());
 			}
-		
 	}
 
 	@Override
-	protected List confirmQuotes(Object session, String name) throws Exception {
-		return null;
+	protected List<Reservation> confirmQuotes(Object session, String name) throws Exception {
+		IReservationSession reservationSession = (IReservationSession)session;
+		return reservationSession.confirmQuotes(name);
 	}
 
 	@Override
 	protected int getNumberOfReservationsForCarType(Object ms, String carRentalName, String carType) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO incorporate session
 		try {
-			int number = this.cra.getNumberOfReservationsForCarType(carType);
+			IManagerSession managerSession = (IManagerSession)ms;
+			int number = managerSession.getNumberOfReservationsForCarType(carType);
 			return number;
 		} catch (Exception e) {
 			throw new UnsupportedOperationException();
@@ -117,14 +116,22 @@ public class Client extends AbstractTestManagement{
 	}
 
 	@Override
-	protected Set getBestClients(Object ms) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	protected Set<String> getBestClients(Object ms) throws Exception {
+		try {
+			IManagerSession managerSession = (IManagerSession)ms;
+			return managerSession.getBestClients();
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override
 	protected String getCheapestCarType(Object session, Date start, Date end, String region) throws Exception {
-		// TODO Auto-generated method stub
-		return null;		
+		try {
+			IReservationSession reservationSession = (IReservationSession)session;
+			return reservationSession.getCheapestCarType(start, end, region);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}	
 	}
 }

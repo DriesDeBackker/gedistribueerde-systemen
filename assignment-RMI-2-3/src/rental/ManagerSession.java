@@ -1,8 +1,10 @@
 package rental;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.util.Set;
 
-public class ManagerSession implements Serializable{
+public class ManagerSession implements IManagerSession {
 	
 	private String name;
 	private String rentalName;
@@ -14,6 +16,29 @@ public class ManagerSession implements Serializable{
 		this.setCarRentalAgency(agency);
 	}
 	
+	@Override
+	public void registerCarRentalCompany(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void unregisterCarRentalCompany(String name) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public int getNumberOfReservationsForCarType(String carType) throws RemoteException {
+		return this.getCarRentalAgency().getNumberOfReservationsForCarType(carType);
+	}
+	
+	@Override
+	public Set<String> getBestClients() {
+		return this.getCarRentalAgency().getBestClients();
+	}
+	
+	@Override
 	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year){
 		return this.getCarRentalAgency().getMostPopularCarTypeIn(carRentalCompanyName, year);
 	}
