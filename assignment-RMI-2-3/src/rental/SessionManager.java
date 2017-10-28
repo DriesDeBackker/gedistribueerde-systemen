@@ -3,9 +3,6 @@ package rental;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 public class SessionManager implements ISessionManager {
 	
@@ -21,19 +18,28 @@ public class SessionManager implements ISessionManager {
 
 	@Override
 	public IReservationSession getNewReservationSession(String name) throws RemoteException {
-		ReservationSession newReservationSession = new ReservationSession(name, this.carRentalAgency);
-		this.reservationSessions.add(newReservationSession);
-		//return (IReservationSession)UnicastRemoteObject.exportObject(newReservationSession, 0);
-		//Don't yet know at this point whether the statement above or the one below should be used.
-		return newReservationSession;
+		try {
+			ReservationSession newReservationSession = new ReservationSession(name, this.carRentalAgency);
+			this.reservationSessions.add(newReservationSession);
+			//return (IReservationSession)UnicastRemoteObject.exportObject(newReservationSession, 0);
+			//Don't yet know at this point whether the statement above or the one below should be used.
+			return newReservationSession;
+		} catch (Exception e) {
+			throw new RemoteException("Could not create a reservation session.");
+		}
 	}
 	
 	@Override
 	public IManagerSession getNewManagerSession(String name, String carRentalName) throws RemoteException {
-		ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this.carRentalAgency);
-		this.managerSessions.add(newManagerSession);
-		//return (IManagerSession)UnicastRemoteObject.exportObject(newManagerSession, 0);
-		//Don't yet know at this point whether the statement above or the one below should be used.
-		return newManagerSession;
+		try {
+			ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this.carRentalAgency);
+			this.managerSessions.add(newManagerSession);
+			//return (IManagerSession)UnicastRemoteObject.exportObject(newManagerSession, 0);
+			//Don't yet know at this point whether the statement above or the one below should be used.
+			return newManagerSession;
+		} catch (Exception e) {
+			throw new RemoteException("Could not create a manager session.");
+		}
+
 	}
 }

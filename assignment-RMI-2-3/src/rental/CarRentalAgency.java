@@ -107,7 +107,10 @@ public class CarRentalAgency {
 	
 
 	public Set<CarType> getAvailableCarTypes(Date from, Date end) {
-		// TODO Auto-generated method stub
+		Set<CarType> availableCarTypes = new HashSet<CarType>();
+		for (CarRentalCompany company : this.carRentalCompanies) {
+			availableCarTypes.addAll(company.getAvailableCarTypes(from, end));
+		}
 		return null;
 	}
 

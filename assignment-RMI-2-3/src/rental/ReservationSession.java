@@ -21,8 +21,7 @@ public class ReservationSession implements IReservationSession {
 	
 	@Override
 	public Set<CarType> getAvailableCarTypes(Date from, Date end) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.carRentalAgency.getAvailableCarTypes(from, end);
 	}
 
 	@Override
