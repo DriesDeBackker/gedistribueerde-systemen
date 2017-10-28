@@ -91,7 +91,7 @@ public class Client extends AbstractTestManagement{
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
 		try {
 			IReservationSession reservationSession = (IReservationSession)session;
-			Set<CarType> carTypes = reservationSession.getAvailableCarTypes(start, end);
+			Set<CarType> carTypes = reservationSession.checkForAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();

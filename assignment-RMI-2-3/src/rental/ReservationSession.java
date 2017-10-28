@@ -20,8 +20,14 @@ public class ReservationSession implements IReservationSession {
 	}
 	
 	@Override
-	public Set<CarType> getAvailableCarTypes(Date from, Date end) throws RemoteException {
-		return this.carRentalAgency.getAvailableCarTypes(from, end);
+	public Set<CarType> checkForAvailableCarTypes(Date start, Date end) throws RemoteException {
+		return this.carRentalAgency.getAvailableCarTypes(start, end);
+	}
+	
+	@Override
+	public String getCheapestCarType(Date start, Date end, String region) {
+		return this.carRentalAgency.getCheapestCarType(start, end, region);
+		
 	}
 
 	@Override
@@ -53,15 +59,6 @@ public class ReservationSession implements IReservationSession {
 	public int getNumberOfReservationsForCarType(String carType) throws RemoteException {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-	
-	public Set<CarType> checkForAvailableCarTypes(Date start, Date end) throws RemoteException {
-		return this.carRentalAgency.getAvailableCarTypes(start, end);
-	}
-	
-	public String getCheapestCarType(Date start, Date end, String region) {
-		return this.carRentalAgency.getCheapestCarType(start, end, region);
-		
 	}
 
 	public String getName() {

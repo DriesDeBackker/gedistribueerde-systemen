@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface IReservationSession extends Remote {
 
-	public Set<CarType> getAvailableCarTypes(Date from, Date end) 
+	public Set<CarType> checkForAvailableCarTypes(Date from, Date end) 
 			throws RemoteException;
 	
 	public Quote createQuote(ReservationConstraints constraints, String client)

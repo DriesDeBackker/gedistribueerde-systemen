@@ -5,9 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
@@ -106,12 +108,12 @@ public class CarRentalAgency {
 	}
 	
 
-	public Set<CarType> getAvailableCarTypes(Date from, Date end) {
+	public Set<CarType> getAvailableCarTypes(Date start, Date end) {
 		Set<CarType> availableCarTypes = new HashSet<CarType>();
 		for (CarRentalCompany company : this.carRentalCompanies) {
-			availableCarTypes.addAll(company.getAvailableCarTypes(from, end));
+			availableCarTypes.addAll(company.getAvailableCarTypes(start, end));
 		}
-		return null;
+		return availableCarTypes;
 	}
 
 	/*
@@ -163,8 +165,36 @@ public class CarRentalAgency {
 	}
 
 	public String getCheapestCarType(Date start, Date end, String region) {
-		// TODO Auto-generated method stub
-		return null;
+		double lowestPrice = 999999999;
+		String cheapestCar = null;
+		Map<String, Double> carTypeWithPrice = this.getAvailableCarTypesWithPrice(start, end, region);
+		for(String carType : carTypeWithPrice.keySet()) {
+			double price = carTypeWithPrice.get(carType);
+			if (cheapestCar == null || price < lowestPrice) {
+				cheapestCar = carType;
+				lowestPrice = price;
+			}
+		}
+		return cheapestCar;
+	}
+
+	private Map<String, Double> getAvailableCarTypesWithPrice(Date start, Date end, String region) {
+		Set<CarType> availableCarTypes = this.getAvailableCarTypes(start, end, region);
+		Map<String, Double> availableCarTypesWithPrice = new HashMap<String, Double>();
+		for (CarType carType : availableCarTypes) {
+			availableCarTypesWithPrice.put(carType.getName(), carType.getRentalPricePerDay());
+		}
+		return availableCarTypesWithPrice;
+	}
+
+	private Set<CarType> getAvailableCarTypes(Date start, Date end, String region) {
+		Set<CarType> availableCarTypes = new HashSet<CarType>();
+		for (CarRentalCompany company : this.carRentalCompanies) {
+			if (company.hasRegion(region)) {
+				availableCarTypes.addAll(company.getAvailableCarTypes(start, end));
+			}
+		}
+		return availableCarTypes;
 	}
 
 }
