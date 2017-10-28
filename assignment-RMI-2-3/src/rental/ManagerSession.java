@@ -2,6 +2,8 @@ package rental;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ManagerSession implements IManagerSession {
@@ -14,6 +16,15 @@ public class ManagerSession implements IManagerSession {
 		this.setName(name);
 		this.setRentalName(rentalName);
 		this.setCarRentalAgency(agency);
+	}
+	
+	@Override
+	public Set<String> getAllRegisteredCarCompanies() throws RemoteException {
+		try {
+			return this.getCarRentalAgency().getCarRentalCompanyNames();
+		} catch (Exception e) {
+			throw new RemoteException("Could not retrieve the names of the registered companies.");
+		}
 	}
 	
 	@Override
@@ -31,13 +42,12 @@ public class ManagerSession implements IManagerSession {
 			this.getCarRentalAgency().unregisterCarRentalCompany(name);
 		} catch (Exception e) {
 			throw new RemoteException("Could not unregister company.");
-		}
-		
+		}	
 	}
 	
 	@Override
-	public int getNumberOfReservationsForCarType(String carType) throws RemoteException {
-		return this.getCarRentalAgency().getNumberOfReservationsForCarType(carType);
+	public int getNumberOfReservationsForCarType(String carRentalName, String carType) throws RemoteException {
+		return this.getCarRentalAgency().getNumberOfReservationsForCarType(carRentalName, carType);
 	}
 	
 	@Override

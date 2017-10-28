@@ -23,9 +23,6 @@ public interface IReservationSession extends Remote {
 	
 	public List<Reservation> getRenterReservations(String clientname)
 			throws RemoteException;
-	
-	public int getNumberOfReservationsForCarType(String carType)
-			throws RemoteException;
 
 	public String getCheapestCarType(Date start, Date end, String region)
 			throws RemoteException;

@@ -149,8 +149,9 @@ public class CarRentalAgency {
 		return null;
 	}
 	
-	public int getNumberOfReservationsForCarType(String carType) {
-		// TODO Auto-generated method stub
+	public int getNumberOfReservationsForCarType(String carRentalName, String carType) {
+		CarRentalCompany crc = this.getCarRentalCompanyByName(carRentalName);
+		crc.getNumberOfReservationsForCarType(carType);
 		return 0;
 	}
 
@@ -195,6 +196,20 @@ public class CarRentalAgency {
 			}
 		}
 		return availableCarTypes;
+	}
+
+	public Set<CarRentalCompany> getCarRentalCompanies() {
+		return this.carRentalCompanies;
+	}
+
+	public Set<String> getCarRentalCompanyNames() {
+		Set<String> companyNames = new HashSet<String>();
+		Set<CarRentalCompany> companies = this.getCarRentalCompanies();
+		for(CarRentalCompany company : companies) {
+			companyNames.add(company.getName());
+		}
+		return companyNames;
+		
 	}
 
 }

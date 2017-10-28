@@ -25,7 +25,7 @@ public class ReservationSession implements IReservationSession {
 	}
 	
 	@Override
-	public String getCheapestCarType(Date start, Date end, String region) {
+	public String getCheapestCarType(Date start, Date end, String region) throws RemoteException {
 		return this.carRentalAgency.getCheapestCarType(start, end, region);
 		
 	}
@@ -53,12 +53,6 @@ public class ReservationSession implements IReservationSession {
 	public List<Reservation> getRenterReservations(String clientname) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int getNumberOfReservationsForCarType(String carType) throws RemoteException {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	public String getName() {

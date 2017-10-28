@@ -117,13 +117,22 @@ public class Client extends AbstractTestManagement{
 		IReservationSession reservationSession = (IReservationSession)session;
 		return reservationSession.confirmQuotes(name);
 	}
-
-	@Override
-	protected int getNumberOfReservationsForCarType(Object ms, String carRentalName, String carType) throws Exception {
-		// TODO incorporate session
+	
+	protected Set<String> getAllRegisteredCarCompanies(Object ms) {
 		try {
 			IManagerSession managerSession = (IManagerSession)ms;
-			int number = managerSession.getNumberOfReservationsForCarType(carType);
+			Set<String> companies = managerSession.getAllRegisteredCarCompanies();
+			return companies;
+		} catch (Exception e) {
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	@Override
+	protected int getNumberOfReservationsForCarType(Object ms, String carRentalName, String carType) throws Exception {
+		try {
+			IManagerSession managerSession = (IManagerSession)ms;
+			int number = managerSession.getNumberOfReservationsForCarType(carRentalName, carType);
 			return number;
 		} catch (Exception e) {
 			throw new UnsupportedOperationException();
