@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 import rental.CarType;
 import rental.ICarRentalAgency;
-import rental.ICarRentalCompany;
 import rental.ManagerSession;
 import rental.Quote;
 import rental.Reservation;
@@ -44,23 +43,11 @@ public class Client extends AbstractTestManagement{
 		super(scriptFile);
 		this.cra = cra;
 	}
-	
-
-	@Override
-	protected Set getBestClients(Object ms) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected String getCheapestCarType(Object session, Date start, Date end, String region) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	protected CarType getMostPopularCarTypeIn(Object ms, String carRentalCompanyName, int year) throws Exception {
-		// TODO Auto-generated method stub
+		ManagerSession managerSession = (ManagerSession)ms;
+		managerSession.getMostPopularCarTypeIn(carRentalCompanyName, year);
 		return null;
 	}
 
@@ -83,12 +70,13 @@ public class Client extends AbstractTestManagement{
 			throw new UnsupportedOperationException("Could not create a manager session");
 		}
 	}
-
+	
 	@Override
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
 		//TODO: incorporate session.
 		try {
-			Set<CarType> carTypes = this.cra.getAvailableCarTypes(start, end);
+			ReservationSession reservationSession = (ReservationSession)session;
+			Set<CarType> carTypes = reservationSession.checkForAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
 		} catch(Exception e) {
 			throw new UnsupportedOperationException();
@@ -102,7 +90,8 @@ public class Client extends AbstractTestManagement{
 			// TODO incorporate session
 			ReservationConstraints constraints = new ReservationConstraints(start, end, carType, region);
 			try {
-				Quote quote = this.cra.createQuote(constraints, clientName);
+				ReservationSession reservationSession = (ReservationSession)session;
+				Quote quote = reservationSession.createQuote(constraints, clientName);
 				System.out.println(quote.toString());
 				return quote;
 			} catch(Exception e) {
@@ -125,5 +114,17 @@ public class Client extends AbstractTestManagement{
 		} catch (Exception e) {
 			throw new UnsupportedOperationException();
 		}		
+	}
+
+	@Override
+	protected Set getBestClients(Object ms) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected String getCheapestCarType(Object session, Date start, Date end, String region) throws Exception {
+		// TODO Auto-generated method stub
+		return null;		
 	}
 }

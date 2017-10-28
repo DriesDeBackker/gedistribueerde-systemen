@@ -26,14 +26,14 @@ public class CarRentalAgency implements ICarRentalAgency {
 
 	@Override
 	public ReservationSession getNewReservationSession(String name) throws RemoteException {
-		ReservationSession newReservationSession = new ReservationSession(name);
+		ReservationSession newReservationSession = new ReservationSession(name, this);
 		this.reservationSessions.add(newReservationSession);
 		return newReservationSession;
 	}
 	
 	@Override
 	public ManagerSession getNewManagerSession(String name, String carRentalName) throws RemoteException {
-		ManagerSession newManagerSession = new ManagerSession(name, carRentalName);
+		ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this);
 		this.managerSessions.add(newManagerSession);
 		return newManagerSession;
 	}
@@ -67,6 +67,11 @@ public class CarRentalAgency implements ICarRentalAgency {
 	public int getNumberOfReservationsForCarType(String carType) throws RemoteException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
