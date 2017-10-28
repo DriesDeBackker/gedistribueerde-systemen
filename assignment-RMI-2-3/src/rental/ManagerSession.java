@@ -18,7 +18,7 @@ public class ManagerSession implements IManagerSession {
 	
 	@Override
 	public void registerCarRentalCompany(String name) throws RemoteException {
-		// TODO Auto-generated method stub
+		CarRentalCompany newCompany = new CarRentalCompany(name, null, null);
 		
 	}
 
