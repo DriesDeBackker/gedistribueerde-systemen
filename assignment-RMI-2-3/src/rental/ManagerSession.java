@@ -18,13 +18,20 @@ public class ManagerSession implements IManagerSession {
 	
 	@Override
 	public void registerCarRentalCompany(String name) throws RemoteException {
-		CarRentalCompany newCompany = new CarRentalCompany(name, null, null);
-		
+		try {
+			this.getCarRentalAgency().registerCarRentalCompany(name);
+		} catch (Exception e) {
+			throw new RemoteException("Could not register company.");
+		}
 	}
 
 	@Override
 	public void unregisterCarRentalCompany(String name) throws RemoteException {
-		// TODO Auto-generated method stub
+		try {
+			this.getCarRentalAgency().unregisterCarRentalCompany(name);
+		} catch (Exception e) {
+			throw new RemoteException("Could not unregister company.");
+		}
 		
 	}
 	

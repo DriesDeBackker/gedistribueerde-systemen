@@ -26,10 +26,24 @@ public class CarRentalAgency {
 		try {
 			CrcData data = this.loadData(name+".csv");
 			CarRentalCompany newCarRentalCompany = new CarRentalCompany(name, data.regions, data.cars);
-			this.addCarRentalCompany(newCarRentalCompany);
+			this.carRentalCompanies.add(newCarRentalCompany);
 		} catch (NumberFormatException | ReservationException | IOException e) {
 			throw new Exception("Could not register the car rental company");
 		}
+	}
+	
+	public void unregisterCarRentalCompany(String name) throws Exception {
+		boolean nothingFound = true;
+		for(CarRentalCompany company : this.carRentalCompanies) {
+			if (company.getName() == name) {
+				this.carRentalCompanies.remove(company);
+				nothingFound = false;
+				break;
+			}
+		} if (nothingFound) {
+			throw new Exception("Could not unregister the car rental company as it is not present.");
+		}
+		
 	}
 	
 	//loads data of a rental company from the data file bearing its name.
@@ -86,6 +100,7 @@ public class CarRentalAgency {
 	private void addCarRentalCompany(CarRentalCompany newCarRentalCompany) {
 		this.carRentalCompanies.add(newCarRentalCompany);
 	}
+	
 
 	public Set<CarType> getAvailableCarTypes(Date from, Date end) {
 		// TODO Auto-generated method stub

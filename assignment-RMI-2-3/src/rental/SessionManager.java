@@ -13,7 +13,7 @@ public class SessionManager implements ISessionManager {
 	private ArrayList<ReservationSession> reservationSessions;
 	private CarRentalAgency carRentalAgency;
 
-	SessionManager(CarRentalAgency carRentalAgency){
+	SessionManager(CarRentalAgency carRentalAgency) {
 		this.managerSessions = new ArrayList<ManagerSession>();
 		this.reservationSessions = new ArrayList<ReservationSession>();
 		this.carRentalAgency = carRentalAgency;

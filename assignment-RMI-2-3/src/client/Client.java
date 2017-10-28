@@ -55,7 +55,7 @@ public class Client extends AbstractTestManagement{
 			IReservationSession newReservationSession = this.smgr.getNewReservationSession(name);
 			return newReservationSession;
 		} catch(Exception e) {
-			throw new UnsupportedOperationException("Could not create a reservation session");
+			throw new UnsupportedOperationException("Could not create a reservation session.");
 		}
 	}
 
@@ -65,7 +65,25 @@ public class Client extends AbstractTestManagement{
 			IManagerSession newManagerSession = this.smgr.getNewManagerSession(name, carRentalName);
 			return newManagerSession;
 		} catch(Exception e) {
-			throw new UnsupportedOperationException("Could not create a manager session");
+			throw new UnsupportedOperationException("Could not create a manager session.");
+		}
+	}
+	
+	protected void registerCarRentalCompany(Object ms, String name) throws Exception {
+		try {
+			IManagerSession managerSession = (IManagerSession)ms;
+			managerSession.registerCarRentalCompany(name);
+		} catch(Exception e) {
+			throw new UnsupportedOperationException("Could not register the company.");
+		}
+	}
+	
+	protected void unregisterCarRentalCompany(Object ms, String name) throws Exception {
+		try {
+			IManagerSession managerSession = (IManagerSession)ms;
+			managerSession.unregisterCarRentalCompany(name);
+		} catch(Exception e) {
+			throw new UnsupportedOperationException("Could not register the company.");
 		}
 	}
 	
