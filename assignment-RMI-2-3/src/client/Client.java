@@ -5,17 +5,14 @@ import java.rmi.registry.Registry;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import rental.CarType;
-import rental.ICarRentalAgency;
 import rental.IManagerSession;
 import rental.IReservationSession;
-import rental.ManagerSession;
+import rental.ISessionManager;
 import rental.Quote;
 import rental.Reservation;
 import rental.ReservationConstraints;
-import rental.ReservationSession;
 
 public class Client extends AbstractTestManagement{
 	
@@ -25,25 +22,25 @@ public class Client extends AbstractTestManagement{
 	
 	public static void main(String[] args) throws Exception {
 		
-		String carRentalAgencyName = "agency";
+		String sessionManagerName = "sessionManager";
 		
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-		ICarRentalAgency cra = (ICarRentalAgency) registry.lookup(carRentalAgencyName);
+		ISessionManager smgr = (ISessionManager) registry.lookup(sessionManagerName);
 		
-		Client client = new Client("simpleTrips", cra);
+		Client client = new Client("simpleTrips", smgr);
 		client.run();
 	}
 
-	private ICarRentalAgency cra;
+	private ISessionManager smgr;
 
 	
 	/***************
 	 * CONSTRUCTOR *
 	 ***************/
 	
-	public Client(String scriptFile, ICarRentalAgency cra) {
+	public Client(String scriptFile, ISessionManager smgr) {
 		super(scriptFile);
-		this.cra = cra;
+		this.smgr = smgr;
 	}
 
 	@Override
@@ -55,7 +52,7 @@ public class Client extends AbstractTestManagement{
 	@Override
 	protected Object getNewReservationSession(String name) throws Exception {
 		try {
-			IReservationSession newReservationSession = this.cra.getNewReservationSession(name);
+			IReservationSession newReservationSession = this.smgr.getNewReservationSession(name);
 			return newReservationSession;
 		} catch(Exception e) {
 			throw new UnsupportedOperationException("Could not create a reservation session");
@@ -65,7 +62,7 @@ public class Client extends AbstractTestManagement{
 	@Override
 	protected Object getNewManagerSession(String name, String carRentalName) throws Exception {
 		try {
-			IManagerSession newManagerSession = this.cra.getNewManagerSession(name, carRentalName);
+			IManagerSession newManagerSession = this.smgr.getNewManagerSession(name, carRentalName);
 			return newManagerSession;
 		} catch(Exception e) {
 			throw new UnsupportedOperationException("Could not create a manager session");

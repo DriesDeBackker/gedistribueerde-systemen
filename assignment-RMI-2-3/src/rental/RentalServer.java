@@ -18,11 +18,13 @@ public class RentalServer {
 		System.setSecurityManager(null);
 		//CrcData data  = loadData("hertz.csv");
 		CarRentalAgency cra = new CarRentalAgency();
-		ICarRentalAgency stub = (ICarRentalAgency) UnicastRemoteObject.exportObject(cra, 0);
+		SessionManager smgr = new SessionManager(cra);
+		ISessionManager stub = (ISessionManager)UnicastRemoteObject.exportObject(smgr, 0);
 		Registry registry = LocateRegistry.getRegistry();
-		registry.rebind("agency", stub);
+		registry.rebind("sessionManager", stub);
 	}
-
+	
+	//TODO: echt nog vanalles....
 	public static CrcData loadData(String datafile)
 			throws ReservationException, NumberFormatException, IOException {
 

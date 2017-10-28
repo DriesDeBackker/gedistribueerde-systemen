@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public interface ICarRentalAgency extends Remote {
+public interface ISessionManager extends Remote {
 
 	public IReservationSession getNewReservationSession(String name)
 			throws RemoteException;

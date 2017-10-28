@@ -7,16 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class CarRentalAgency implements ICarRentalAgency {
+public class CarRentalAgency {
 	
 	private ArrayList<CarRentalCompany> carRentalCompanies;
-	private ArrayList<ManagerSession> managerSessions;
-	private ArrayList<ReservationSession> reservationSessions;
 
 	CarRentalAgency(){
 		this.carRentalCompanies = new ArrayList<CarRentalCompany>();
-		this.managerSessions = new ArrayList<ManagerSession>();
-		this.reservationSessions = new ArrayList<ReservationSession>();
 	}
 
 	public Set<CarType> getAvailableCarTypes(Date from, Date end) throws RemoteException {
@@ -24,24 +20,6 @@ public class CarRentalAgency implements ICarRentalAgency {
 		return null;
 	}
 
-	@Override
-	public IReservationSession getNewReservationSession(String name) throws RemoteException {
-		ReservationSession newReservationSession = new ReservationSession(name, this);
-		this.reservationSessions.add(newReservationSession);
-		//return (IReservationSession)UnicastRemoteObject.exportObject(newReservationSession, 0);
-		//Don't yet know at this point whether the statement above or the one below should be used.
-		return newReservationSession;
-	}
-	
-	@Override
-	public IManagerSession getNewManagerSession(String name, String carRentalName) throws RemoteException {
-		ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this);
-		this.managerSessions.add(newManagerSession);
-		//return (IManagerSession)UnicastRemoteObject.exportObject(newManagerSession, 0);
-		//Don't yet know at this point whether the statement above or the one below should be used.
-		return newManagerSession;
-	}
-	
 	/*
 	@Override
 	public Quote createQuote(ReservationConstraints constraints, String client)
