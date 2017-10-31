@@ -14,11 +14,11 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 
-public class CarRentalAgency {
+public class NamingService {
 	
 	private Set<CarRentalCompany> carRentalCompanies;
 
-	CarRentalAgency(){
+	NamingService(){
 		this.carRentalCompanies = new HashSet<CarRentalCompany>();
 	}
 	
@@ -105,97 +105,6 @@ public class CarRentalAgency {
 	
 	private void addCarRentalCompany(CarRentalCompany newCarRentalCompany) {
 		this.carRentalCompanies.add(newCarRentalCompany);
-	}
-	
-
-	public Set<CarType> getAvailableCarTypes(Date start, Date end) {
-		Set<CarType> availableCarTypes = new HashSet<CarType>();
-		for (CarRentalCompany company : this.carRentalCompanies) {
-			availableCarTypes.addAll(company.getAvailableCarTypes(start, end));
-		}
-		return availableCarTypes;
-	}
-
-	/*
-	@Override
-	public Quote createQuote(ReservationConstraints constraints, String client)
-			throws RemoteException, ReservationException {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
-	
-	public boolean canCreateQuote(ReservationConstraints constraint, String client) {
-		// TODO implement this
-		return true;
-	}
-	
-	/*
-	@Override
-	public Reservation confirmQuote(Quote quote) throws RemoteException, ReservationException {
-		// TODO implement this
-		return null;
-	}*/
-	
-	/*
-	@Override
-	public void cancelReservation(Reservation res) throws RemoteException {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
-	
-	public List<Reservation> getRenterReservations(String clientname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public int getNumberOfReservationsForCarType(String carRentalName, String carType) {
-		CarRentalCompany crc = this.getCarRentalCompanyByName(carRentalName);
-		crc.getNumberOfReservationsForCarType(carType);
-		return 0;
-	}
-
-	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Set<String> getBestClients(){
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getCheapestCarType(Date start, Date end, String region) {
-		double lowestPrice = 999999999;
-		String cheapestCar = null;
-		Map<String, Double> carTypeWithPrice = this.getAvailableCarTypesWithPrice(start, end, region);
-		for(String carType : carTypeWithPrice.keySet()) {
-			double price = carTypeWithPrice.get(carType);
-			if (cheapestCar == null || price < lowestPrice) {
-				cheapestCar = carType;
-				lowestPrice = price;
-			}
-		}
-		return cheapestCar;
-	}
-
-	private Map<String, Double> getAvailableCarTypesWithPrice(Date start, Date end, String region) {
-		Set<CarType> availableCarTypes = this.getAvailableCarTypes(start, end, region);
-		Map<String, Double> availableCarTypesWithPrice = new HashMap<String, Double>();
-		for (CarType carType : availableCarTypes) {
-			availableCarTypesWithPrice.put(carType.getName(), carType.getRentalPricePerDay());
-		}
-		return availableCarTypesWithPrice;
-	}
-
-	private Set<CarType> getAvailableCarTypes(Date start, Date end, String region) {
-		Set<CarType> availableCarTypes = new HashSet<CarType>();
-		for (CarRentalCompany company : this.carRentalCompanies) {
-			if (company.hasRegion(region)) {
-				availableCarTypes.addAll(company.getAvailableCarTypes(start, end));
-			}
-		}
-		return availableCarTypes;
 	}
 
 	public Set<CarRentalCompany> getCarRentalCompanies() {

@@ -8,18 +8,18 @@ public class SessionManager implements ISessionManager {
 	
 	private ArrayList<ManagerSession> managerSessions;
 	private ArrayList<ReservationSession> reservationSessions;
-	private CarRentalAgency carRentalAgency;
+	private NamingService namingService;
 
-	SessionManager(CarRentalAgency carRentalAgency) {
+	SessionManager(NamingService carRentalAgency) {
 		this.managerSessions = new ArrayList<ManagerSession>();
 		this.reservationSessions = new ArrayList<ReservationSession>();
-		this.carRentalAgency = carRentalAgency;
+		this.namingService = namingService;
 	}
 
 	@Override
 	public IReservationSession getNewReservationSession(String name) throws RemoteException {
 		try {
-			ReservationSession newReservationSession = new ReservationSession(name, this.carRentalAgency);
+			ReservationSession newReservationSession = new ReservationSession(name, this.namingService);
 			this.reservationSessions.add(newReservationSession);
 			//return (IReservationSession)UnicastRemoteObject.exportObject(newReservationSession, 0);
 			//Don't yet know at this point whether the statement above or the one below should be used.
@@ -32,7 +32,7 @@ public class SessionManager implements ISessionManager {
 	@Override
 	public IManagerSession getNewManagerSession(String name, String carRentalName) throws RemoteException {
 		try {
-			ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this.carRentalAgency);
+			ManagerSession newManagerSession = new ManagerSession(name, carRentalName, this.namingService);
 			this.managerSessions.add(newManagerSession);
 			//return (IManagerSession)UnicastRemoteObject.exportObject(newManagerSession, 0);
 			//Don't yet know at this point whether the statement above or the one below should be used.

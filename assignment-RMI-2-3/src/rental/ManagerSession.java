@@ -10,18 +10,18 @@ public class ManagerSession implements IManagerSession {
 	
 	private String name;
 	private String rentalName;
-	private CarRentalAgency carRentalAgency;
+	private NamingService namingService;
 
-	ManagerSession(String name, String rentalName, CarRentalAgency agency) {
+	ManagerSession(String name, String rentalName, NamingService agency) {
 		this.setName(name);
 		this.setRentalName(rentalName);
-		this.setCarRentalAgency(agency);
+		this.setNamingService(agency);
 	}
 	
 	@Override
 	public Set<String> getAllRegisteredCarCompanies() throws RemoteException {
 		try {
-			return this.getCarRentalAgency().getCarRentalCompanyNames();
+			return this.getNamingService().getCarRentalCompanyNames();
 		} catch (Exception e) {
 			throw new RemoteException("Could not retrieve the names of the registered companies.");
 		}
@@ -30,7 +30,7 @@ public class ManagerSession implements IManagerSession {
 	@Override
 	public void registerCarRentalCompany(String name) throws RemoteException {
 		try {
-			this.getCarRentalAgency().registerCarRentalCompany(name);
+			this.getNamingService().registerCarRentalCompany(name);
 		} catch (Exception e) {
 			throw new RemoteException("Could not register company.");
 		}
@@ -39,7 +39,7 @@ public class ManagerSession implements IManagerSession {
 	@Override
 	public void unregisterCarRentalCompany(String name) throws RemoteException {
 		try {
-			this.getCarRentalAgency().unregisterCarRentalCompany(name);
+			this.getNamingService().unregisterCarRentalCompany(name);
 		} catch (Exception e) {
 			throw new RemoteException("Could not unregister company.");
 		}	
@@ -47,17 +47,21 @@ public class ManagerSession implements IManagerSession {
 	
 	@Override
 	public int getNumberOfReservationsForCarType(String carRentalName, String carType) throws RemoteException {
-		return this.getCarRentalAgency().getNumberOfReservationsForCarType(carRentalName, carType);
+		CarRentalCompany crc = this.namingService.getCarRentalCompanyByName(carRentalName);
+		crc.getNumberOfReservationsForCarType(carType);
+		return 0;
 	}
 	
 	@Override
 	public Set<String> getBestClients() {
-		return this.getCarRentalAgency().getBestClients();
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override
 	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year){
-		return this.getCarRentalAgency().getMostPopularCarTypeIn(carRentalCompanyName, year);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public String getName() {
@@ -76,12 +80,12 @@ public class ManagerSession implements IManagerSession {
 		this.rentalName = rentalName;
 	}
 
-	public CarRentalAgency getCarRentalAgency() {
-		return carRentalAgency;
+	public NamingService getNamingService() {
+		return namingService;
 	}
 
-	private void setCarRentalAgency(CarRentalAgency carRentalAgency) {
-		this.carRentalAgency = carRentalAgency;
+	private void setNamingService(NamingService namingService) {
+		this.namingService = namingService;
 	}
 
 }
