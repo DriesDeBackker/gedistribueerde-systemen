@@ -45,7 +45,13 @@ public class Reservation extends Quote {
 		if (!super.equals(obj))
 			return false;
 		Reservation other = (Reservation) obj;
-		if (carId != other.carId)
+		if (getCarId() != other.getCarId())
+			return false;
+        if (getStartDate()!= other.getStartDate())
+			return false;
+        if (getEndDate()!= other.getEndDate())
+			return false;
+        if (!getCarRenter().equals(other.getCarRenter()))
 			return false;
 		return true;
 	}
