@@ -19,7 +19,7 @@ public class NamingService {
 		this.carRentalCompanies = new HashSet<CarRentalCompany>();
 	}
 	
-	public CarRentalCompany getCarRentalCompanyByName(String name) {
+	public synchronized CarRentalCompany getCarRentalCompanyByName(String name) {
 		for(CarRentalCompany company : this.carRentalCompanies) {
 			if (company.getName() == name) {
 				return company;
@@ -29,7 +29,7 @@ public class NamingService {
 	
 	//registers the car rental company with given name by loading it from a file
 	// and adding to the list the CarRentalCompany object created with the loaded data.
-	public void registerCarRentalCompany(String name) throws Exception{
+	public synchronized void registerCarRentalCompany(String name) throws Exception{
 		try {
 			CrcData data = this.loadData(name+".csv");
 			CarRentalCompany newCarRentalCompany = new CarRentalCompany(name, data.regions, data.cars);
@@ -39,7 +39,7 @@ public class NamingService {
 		}
 	}
 	
-	public void unregisterCarRentalCompany(String name) throws Exception {
+	public synchronized void unregisterCarRentalCompany(String name) throws Exception {
 		CarRentalCompany company = this.getCarRentalCompanyByName(name);
 		if (company == null) {
 			throw new Exception("Could not unregister the car rental company as it is not present.");
@@ -101,11 +101,11 @@ public class NamingService {
 	}
 	
 
-	public Set<CarRentalCompany> getCarRentalCompanies() {
+	public synchronized Set<CarRentalCompany> getCarRentalCompanies() {
 		return this.carRentalCompanies;
 	}
 
-	public Set<String> getCarRentalCompanyNames() {
+	public synchronized Set<String> getCarRentalCompanyNames() {
 		Set<String> companyNames = new HashSet<String>();
 		Set<CarRentalCompany> companies = this.getCarRentalCompanies();
 		for(CarRentalCompany company : companies) {
