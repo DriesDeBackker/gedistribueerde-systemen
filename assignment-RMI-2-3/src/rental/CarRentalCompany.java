@@ -84,7 +84,8 @@ public class CarRentalCompany {
 		if(carTypes.containsKey(carTypeName)) {
 			return getAvailableCarTypes(start, end).contains(carTypes.get(carTypeName));
 		} else {
-			throw new IllegalArgumentException("<" + carTypeName + "> No car type of name " + carTypeName);
+			return false;
+			//throw new IllegalArgumentException("<" + carTypeName + "> No car type of name " + carTypeName);
 		}
 	}
 	
