@@ -87,12 +87,12 @@ public class ManagerSession implements IManagerSession {
 	}
 	
 	@Override
-	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) throws RemoteException{
+	public CarType getMostPopularCarTypeIn(String name, int year) throws RemoteException{
 		CarRentalCompany crc;
 		try {
-			crc = this.namingService.getCarRentalCompanyByName(carRentalCompanyName);
+			crc = this.namingService.getCarRentalCompanyByName(name);
 		} catch (Exception e) {
-			throw new RemoteException("No company by the name " + carRentalCompanyName);
+			throw new RemoteException("No company by the name " + name);
 		}
 		int max = 0;
 		CarType popular = null;
