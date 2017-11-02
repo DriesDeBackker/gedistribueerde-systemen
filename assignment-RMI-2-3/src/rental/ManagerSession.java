@@ -1,9 +1,10 @@
 package rental;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class ManagerSession implements IManagerSession {
@@ -53,15 +54,46 @@ public class ManagerSession implements IManagerSession {
 	}
 	
 	@Override
-	public Set<String> getBestClients() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<String> getBestClients() throws RemoteException{
+		Set<CarRentalCompany> crcs =getNamingService().getCarRentalCompanies();
+		HashMap<String, Integer> clientres = new HashMap<String,Integer>();
+		for (CarRentalCompany crc : crcs) {
+			Set<String> clients = crc.getClients();
+			for (String client: clients) {
+				int res = crc.getRenterReservations(client).size();
+				if (clientres.containsKey(client)) {
+					int val = clientres.get(client);
+					clientres.replace(client, val+res);
+				}
+				else {
+					clientres.put(client,res);
+				}
+			}
+		}
+	    Set<String> bestClients = new HashSet<String>();
+        int maxValueInMap=(Collections.max(clientres.values()));  
+        for (Entry<String, Integer> entry : clientres.entrySet()) {  
+            if (entry.getValue()==maxValueInMap) {
+               bestClients.add(entry.getKey());
+            }
+        }
+	    return bestClients;
+
+		
 	}
 	
 	@Override
-	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year){
-		// TODO Auto-generated method stub
-		return null;
+	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) throws RemoteException{
+		CarRentalCompany crc = this.namingService.getCarRentalCompanyByName(carRentalCompanyName);
+		int max = 0;
+		CarType popular = null;
+		for (CarType type : crc.getAllCarTypes()) {
+			int n = crc.getNumberOfReservationsForCarTypeInYear(type.getName(),year);
+			if (n > max) {
+				popular = type;
+			}
+		}
+		return popular;
 	}
 
 	public String getName() {

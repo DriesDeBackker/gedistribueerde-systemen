@@ -10,16 +10,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ReservationSession implements IReservationSession {
+public class ReservationSession implements IReservationSession, Serializable {
 	
 	private String name;
 	private NamingService namingService;
 	private List<Quote> quotes;
+	private List<Reservation> reservations;
 
 	ReservationSession(String name, NamingService agency) {
 		this.setName(name);
 		this.setNamingService(agency);
 		this.quotes = new ArrayList<Quote>();
+		this.reservations = new ArrayList<Reservation>();
 	}
 	
 	@Override
@@ -81,27 +83,50 @@ public class ReservationSession implements IReservationSession {
 	@Override
 	public Quote createQuote(ReservationConstraints constraints, String client)
 			throws RemoteException, ReservationException {
-		// TODO Auto-generated method stub
-		return null;
+		Set<CarRentalCompany> crcs = getNamingService().getCarRentalCompanies();
+        for (CarRentalCompany crc : crcs) {
+            if((crc.hasRegion(constraints.getRegion()))
+                && (crc.isAvailable(constraints.getCarType(), constraints.getStartDate(), constraints.getEndDate()))) {
+                Quote quote = crc.createQuote(constraints, client);
+                this.quotes.add(quote);
+                return quote;
+            }
+        }
+        throw new ReservationException("> No cars available to satisfy the given constraints.");
 	}
 
 	@Override
-	public List<Reservation> confirmQuotes(String name) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Reservation> confirmQuotes(String name) throws RemoteException{
+		for (Quote quote: quotes) {
+            CarRentalCompany crc = getNamingService().getCarRentalCompanyByName(quote.getRentalCompany());
+            try{
+                Reservation res = crc.confirmQuote(quote);
+                this.reservations.add(res);
+            }
+            catch(ReservationException e){
+                for(Reservation r : this.reservations){
+                    crc.cancelReservation(r);
+                    this.reservations.remove(r);
+                }
+            }
+        }
+        return this.reservations;
 	}
-
+	
+	/*
 	@Override
 	public void cancelReservation(Reservation res) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
-
+	*/
+	/*
 	@Override
 	public List<Reservation> getRenterReservations(String clientname) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	*/
 
 	public String getName() {
 		return name;
@@ -113,6 +138,14 @@ public class ReservationSession implements IReservationSession {
 
 	private void setNamingService(NamingService namingService) {
 		this.namingService = namingService;
+	}
+
+	public NamingService getNamingService() {
+		return namingService;
+	}
+
+	public List<Quote> getQuotes() {
+		return quotes;
 	}
 
 }

@@ -17,13 +17,13 @@ public interface IReservationSession extends Remote {
 	
 	public List<Reservation> confirmQuotes(String name)
 			throws RemoteException;
-	
+	/*
 	public void cancelReservation(Reservation res) 
 			throws RemoteException;
 	
 	public List<Reservation> getRenterReservations(String clientname)
 			throws RemoteException;
-
+	*/
 	public String getCheapestCarType(Date start, Date end, String region)
 			throws RemoteException;
 

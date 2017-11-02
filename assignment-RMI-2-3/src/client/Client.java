@@ -27,7 +27,7 @@ public class Client extends AbstractTestManagement{
 		Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 		ISessionManager smgr = (ISessionManager) registry.lookup(sessionManagerName);
 		
-		Client client = new Client("simpleTrips", smgr);
+		Client client = new Client("trips", smgr);
 		client.run();
 	}
 
@@ -89,13 +89,10 @@ public class Client extends AbstractTestManagement{
 	
 	@Override
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
-		try {
-			IReservationSession reservationSession = (IReservationSession)session;
+			IReservationSession reservationSession = (IReservationSession) session;
 			Set<CarType> carTypes = reservationSession.checkForAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
-		} catch(Exception e) {
-			throw new UnsupportedOperationException();
-		}
+
 		
 	}
 

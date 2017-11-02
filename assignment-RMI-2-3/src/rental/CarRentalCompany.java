@@ -1,6 +1,7 @@
 package rental;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class CarRentalCompany {
 	private String name;
 	private List<Car> cars;
 	private Map<String,CarType> carTypes = new HashMap<String, CarType>();
+	private Set<String> Clients = new HashSet<String>();
 
 	/***************
 	 * CONSTRUCTOR *
@@ -155,6 +157,7 @@ public class CarRentalCompany {
 		
 		Reservation res = new Reservation(quote, car.getId());
 		car.addReservation(res);
+		addClient(quote.getCarRenter());
 		return res;
 	}
 
@@ -203,5 +206,33 @@ public class CarRentalCompany {
 		}
 		return n;
 	}
+	
+	public int getNumberOfReservationsForCarTypeInYear(String carType, int year) {
+		int n = 0;
+		for (Car car : cars) {
+			if (car.getType().getName().equals(carType)) {
+				if (!car.getReservations().isEmpty()) {
+					for (Reservation res : car.getReservations()) {
+					    Calendar cal = Calendar.getInstance();
+					    cal.setTime(res.getStartDate());
+					    int yearres = cal.get(Calendar.YEAR);
+						if (yearres == year) {
+							n=+1;
+						}
+					}
+					
+				}
+			}
+		}
+		return n;
+	}
+	
+    public void addClient(String client){
+    this.Clients.add(client);
+    }
+    
+    public Set<String> getClients(){
+    return this.Clients;
+    }
 
 }
