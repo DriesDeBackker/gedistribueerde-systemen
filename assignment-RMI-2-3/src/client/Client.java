@@ -45,8 +45,12 @@ public class Client extends AbstractTestManagement{
 
 	@Override
 	protected CarType getMostPopularCarTypeIn(Object ms, String carRentalCompanyName, int year) throws Exception {
-		IManagerSession managerSession = (IManagerSession)ms;
-		return managerSession.getMostPopularCarTypeIn(carRentalCompanyName, year);
+		try {
+			IManagerSession managerSession = (IManagerSession)ms;
+			return managerSession.getMostPopularCarTypeIn(carRentalCompanyName, year);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException(e.toString());
+		}
 	}
 
 	@Override
@@ -83,17 +87,19 @@ public class Client extends AbstractTestManagement{
 			IManagerSession managerSession = (IManagerSession)ms;
 			managerSession.unregisterCarRentalCompany(name);
 		} catch(Exception e) {
-			throw new UnsupportedOperationException("Could not register the company.");
+			throw new UnsupportedOperationException("Could not unregister the company.");
 		}
 	}
 	
 	@Override
 	protected void checkForAvailableCarTypes(Object session, Date start, Date end) throws Exception {
+		try {
 			IReservationSession reservationSession = (IReservationSession) session;
 			Set<CarType> carTypes = reservationSession.checkForAvailableCarTypes(start, end);
 			carTypes.forEach(carType -> System.out.println(carType.toString()));
-
-		
+		} catch(Exception e) {
+			throw new UnsupportedOperationException(e.toString());
+		}
 	}
 
 	@Override
@@ -111,8 +117,13 @@ public class Client extends AbstractTestManagement{
 
 	@Override
 	protected List<Reservation> confirmQuotes(Object session, String name) throws Exception {
-		IReservationSession reservationSession = (IReservationSession)session;
-		return reservationSession.confirmQuotes(name);
+		try {
+			IReservationSession reservationSession = (IReservationSession)session;
+			return reservationSession.confirmQuotes(name);
+		} catch(Exception e) {
+			throw new UnsupportedOperationException(e.toString());
+		}
+
 	}
 	
 	protected Set<String> getAllRegisteredCarCompanies(Object ms) {
@@ -121,7 +132,7 @@ public class Client extends AbstractTestManagement{
 			Set<String> companies = managerSession.getAllRegisteredCarCompanies();
 			return companies;
 		} catch (Exception e) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(e.toString());
 		}
 	}
 	
@@ -132,7 +143,7 @@ public class Client extends AbstractTestManagement{
 			int number = managerSession.getNumberOfReservationsForCarType(carRentalName, carType);
 			return number;
 		} catch (Exception e) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(e.toString());
 		}		
 	}
 
@@ -142,7 +153,7 @@ public class Client extends AbstractTestManagement{
 			IManagerSession managerSession = (IManagerSession)ms;
 			return managerSession.getBestClients();
 		} catch (Exception e) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(e.toString());
 		}
 	}
 
@@ -152,7 +163,7 @@ public class Client extends AbstractTestManagement{
 			IReservationSession reservationSession = (IReservationSession)session;
 			return reservationSession.getCheapestCarType(start, end, region);
 		} catch (Exception e) {
-			throw new UnsupportedOperationException();
+			throw new UnsupportedOperationException(e.toString());
 		}	
 	}
 }

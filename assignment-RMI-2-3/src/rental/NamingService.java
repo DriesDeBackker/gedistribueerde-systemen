@@ -19,12 +19,12 @@ public class NamingService {
 		this.carRentalCompanies = new HashSet<CarRentalCompany>();
 	}
 	
-	public synchronized CarRentalCompany getCarRentalCompanyByName(String name) {
+	public synchronized CarRentalCompany getCarRentalCompanyByName(String name) throws Exception{
 		for(CarRentalCompany company : this.carRentalCompanies) {
-			if (company.getName() == name) {
+			if (company.getName().equals(name)) {
 				return company;
 			}
-		} return null;
+		} throw new Exception("Could not find the company with the given name " + name);
 	}
 	
 	//registers the car rental company with given name by loading it from a file
@@ -32,7 +32,7 @@ public class NamingService {
 	public synchronized void registerCarRentalCompany(String name) throws Exception{
 		try {
 			CrcData data = this.loadData(name+".csv");
-			CarRentalCompany newCarRentalCompany = new CarRentalCompany(name, data.regions, data.cars);
+			CarRentalCompany newCarRentalCompany = new CarRentalCompany(data.name, data.regions, data.cars);
 			this.carRentalCompanies.add(newCarRentalCompany);
 		} catch (NumberFormatException | ReservationException | IOException e) {
 			throw new Exception("Could not register the car rental company");

@@ -48,9 +48,13 @@ public class ManagerSession implements IManagerSession {
 	
 	@Override
 	public int getNumberOfReservationsForCarType(String carRentalName, String carType) throws RemoteException {
-		CarRentalCompany crc = this.namingService.getCarRentalCompanyByName(carRentalName);
-		crc.getNumberOfReservationsForCarType(carType);
-		return 0;
+		try {
+			CarRentalCompany crc = this.namingService.getCarRentalCompanyByName(carRentalName);
+			int reservations = crc.getNumberOfReservationsForCarType(carType);
+			return reservations;
+		} catch (Exception e) {
+			throw new RemoteException("Could not get the number of reservations for specified cartype and company");
+		}
 	}
 	
 	@Override
@@ -84,7 +88,12 @@ public class ManagerSession implements IManagerSession {
 	
 	@Override
 	public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) throws RemoteException{
-		CarRentalCompany crc = this.namingService.getCarRentalCompanyByName(carRentalCompanyName);
+		CarRentalCompany crc;
+		try {
+			crc = this.namingService.getCarRentalCompanyByName(carRentalCompanyName);
+		} catch (Exception e) {
+			throw new RemoteException("No company by the name " + carRentalCompanyName);
+		}
 		int max = 0;
 		CarType popular = null;
 		for (CarType type : crc.getAllCarTypes()) {

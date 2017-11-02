@@ -96,19 +96,25 @@ public class ReservationSession implements IReservationSession, Serializable {
 	}
 
 	@Override
-	public List<Reservation> confirmQuotes(String name) throws RemoteException{
+	public List<Reservation> confirmQuotes(String name) throws RemoteException, ReservationException{
 		for (Quote quote: quotes) {
-            CarRentalCompany crc = getNamingService().getCarRentalCompanyByName(quote.getRentalCompany());
-            try{
-                Reservation res = crc.confirmQuote(quote);
-                this.reservations.add(res);
-            }
-            catch(ReservationException e){
-                for(Reservation r : this.reservations){
-                    crc.cancelReservation(r);
-                    this.reservations.remove(r);
-                }
-            }
+			CarRentalCompany crc;
+			try {
+				crc = getNamingService().getCarRentalCompanyByName(quote.getRentalCompany());
+	            try{
+	            	
+	                Reservation res = crc.confirmQuote(quote);
+	                this.reservations.add(res);
+	            }
+	            catch(ReservationException e){
+	                for(Reservation r : this.reservations){
+	                    crc.cancelReservation(r);
+	                    this.reservations.remove(r);
+	                }
+	            }
+			} catch (Exception e1) {
+				throw new ReservationException("Unexpected naming error during reservation.");
+			}
         }
         return this.reservations;
 	}

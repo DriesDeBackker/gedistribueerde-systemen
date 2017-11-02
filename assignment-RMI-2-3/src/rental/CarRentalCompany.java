@@ -196,7 +196,7 @@ public class CarRentalCompany {
 		return list;
 	}
 	
-	public int getNumberOfReservationsForCarType(String carType) {
+	public synchronized int getNumberOfReservationsForCarType(String carType) {
 		int n = 0;
 		for (Car car : cars) {
 			if (car.getType().getName().equals(carType)) {
@@ -208,7 +208,7 @@ public class CarRentalCompany {
 		return n;
 	}
 	
-	public int getNumberOfReservationsForCarTypeInYear(String carType, int year) {
+	public synchronized int getNumberOfReservationsForCarTypeInYear(String carType, int year) {
 		int n = 0;
 		for (Car car : cars) {
 			if (car.getType().getName().equals(carType)) {

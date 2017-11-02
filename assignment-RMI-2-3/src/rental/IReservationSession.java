@@ -16,7 +16,7 @@ public interface IReservationSession extends Remote {
 			throws RemoteException, ReservationException;
 	
 	public List<Reservation> confirmQuotes(String name)
-			throws RemoteException;
+			throws RemoteException, ReservationException;
 	/*
 	public void cancelReservation(Reservation res) 
 			throws RemoteException;
