@@ -23,10 +23,10 @@ TODO: life cycle van de sessions?
 
  
 \section{Remote objects}
-
+There are 3 remote classes, each with there corresponding remote interface. The sessionManager, reservationSession and mangerSession classes.
 TODO: welke objecten zijn remote en waarom? welke objecten moeten hierdoor serializable zijn? Welke objecten zijn geregistreerd in de RMI registry en waarom? welke remote objecten zijn gelocaliseerd op dezelfde host en waarom?
 \section{Synchronization}
-TODO:synchronization
+With the current deployment at use, it is possible multiple clients are concurrently sending method requests to the server. These request are then executed in interleaving threads. This way some data can become inconsisten.  To solve this problem some methods at the server are defined as synchronized. This will make it impossible for these methods to interleave their thread executions and execute sequential instead. The methods to made synchronized are in the carRentalCompany class and are the ones that can be requested directly by one of the sessions objects.
 \clearpage
 \section{Diagrams}
 {\begin{figure}[h]

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.13)  3 NOV 2017 15:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.13)  3 NOV 2017 15:20
 entering extended mode
 **./report.tex
 (report.tex
@@ -167,37 +167,37 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 13.
  [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<classdiagram.jpg, id=9, 1526.70375pt x 988.69376pt>
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
+<classdiagram.jpg, id=12, 1526.70375pt x 988.69376pt>
 File: classdiagram.jpg Graphic file (type jpg)
  <use classdiagram.jpg>
 Package pdftex.def Info: classdiagram.jpg used on input line 34.
 (pdftex.def)             Requested size: 345.0pt x 223.41202pt.
 
-[2
+[3
 
- <./classdiagram.jpg>] <clientseq.jpg, id=13, 693.59125pt x 167.62625pt>
+ <./classdiagram.jpg>] <clientseq.jpg, id=16, 693.59125pt x 167.62625pt>
 File: clientseq.jpg Graphic file (type jpg)
 
 <use clientseq.jpg>
 Package pdftex.def Info: clientseq.jpg used on input line 40.
 (pdftex.def)             Requested size: 345.0pt x 83.38065pt.
- <reservationseq.jpg, id=14, 1249.66875pt x 825.0825pt>
+ <reservationseq.jpg, id=17, 1249.66875pt x 825.0825pt>
 File: reservationseq.jpg Graphic file (type jpg)
 
 <use reservationseq.jpg>
 Package pdftex.def Info: reservationseq.jpg used on input line 45.
 (pdftex.def)             Requested size: 345.0pt x 227.77338pt.
- [3
+ [4
 
  <./clientseq.jpg> <./reservationseq.jpg>]
-<deployment.jpg, id=18, 731.73375pt x 526.96875pt>
+<deployment.jpg, id=21, 731.73375pt x 557.08125pt>
 File: deployment.jpg Graphic file (type jpg)
  <use deployment.jpg>
 Package pdftex.def Info: deployment.jpg used on input line 51.
-(pdftex.def)             Requested size: 345.0pt x 248.4553pt.
+(pdftex.def)             Requested size: 345.0pt x 262.65276pt.
 
-[4
+[5
 
  <./deployment.jpg>] (report.aux) )
 (\end occurred inside a group at level 4)
@@ -210,18 +210,18 @@ Package pdftex.def Info: deployment.jpg used on input line 51.
 Here is how much of TeX's memory you used:
  2188 strings out of 493328
  30010 string characters out of 3139127
- 96440 words of memory out of 3000000
+ 97440 words of memory out of 3000000
  5711 multiletter control sequences out of 15000+200000
  7280 words of font info for 26 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,6n,28p,570b,239s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,6n,28p,582b,239s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Progra
 m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on report.pdf (4 pages, 411573 bytes).
+Output written on report.pdf (5 pages, 413924 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
+ 38 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
