@@ -27,7 +27,7 @@ There are 3 remote classes, each with there corresponding remote interface. The 
 \\
 Because some objects need to be returned over the remote connection, these classes need to be serialized. For example, the reservation class is a return value in some of the client's methods and needs to be serialized. The class diagram shows wich of these classes are serializable.  
 \section{Synchronization}
-With the current deployment at use, it is possible multiple clients are concurrently sending method requests to the server. These request are then executed in interleaving threads. This way some data can become inconsisten.  To solve this problem some methods at the server are defined as synchronized. This will make it impossible for these methods to interleave their thread executions and execute sequential instead. The methods to made synchronized are in the carRentalCompany class and are the ones that can be requested directly by one of the sessions objects.
+With the current deployment at use, it is possible multiple clients are concurrently sending method requests to the server. These request are then executed in interleaving threads. This way some data can become inconsistent. To solve this problem some methods at the server are defined as synchronized. This will make it impossible for these methods to interleave their thread executions and execute sequential instead. The methods to made synchronized are in the carRentalCompany class and are the ones that can be requested directly by one of the sessions objects.
 \clearpage
 \section{Diagrams}
 {\begin{figure}[h]
