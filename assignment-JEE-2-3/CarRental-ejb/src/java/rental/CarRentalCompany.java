@@ -8,12 +8,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class CarRentalCompany {
 
     private static Logger logger = Logger.getLogger(CarRentalCompany.class.getName());
+    @Id
     private String name;
+    @OneToMany
     private List<Car> cars;
+    @OneToMany
     private Set<CarType> carTypes = new HashSet<CarType>();
 	private List<String> regions;
 
@@ -21,7 +28,9 @@ public class CarRentalCompany {
     /***************
      * CONSTRUCTOR *
      ***************/
-
+    
+    public CarRentalCompany() {}
+    
     public CarRentalCompany(String name, List<String> regions, List<Car> cars) {
         logger.log(Level.INFO, "<{0}> Car Rental Company {0} starting up...", name);
         setName(name);

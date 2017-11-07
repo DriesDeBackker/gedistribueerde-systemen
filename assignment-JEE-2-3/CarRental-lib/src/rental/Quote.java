@@ -5,17 +5,19 @@ import java.util.Date;
 
 public class Quote implements Serializable {
 
-    private Date startDate;
-    private Date endDate;
-    private String carRenter;
-    private String rentalCompany;
-    private String carType;
-    private double rentalPrice;
+    Date startDate;
+    Date endDate;
+    String carRenter;
+    String rentalCompany;
+    String carType;
+    double rentalPrice;
     
     /***************
      * CONSTRUCTOR *
      ***************/
-
+    
+    public Quote(){}
+    
     public Quote(String carRenter, Date start, Date end, String rentalCompany, String carType, double rentalPrice) {
         this.carRenter = carRenter;
         this.startDate = start;

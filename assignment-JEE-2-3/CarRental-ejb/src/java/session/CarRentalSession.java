@@ -18,6 +18,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
 
     private String renter;
     private List<Quote> quotes = new LinkedList<Quote>();
+    private Set<CarType> availableCarTypes;
 
     @Override
     public Set<String> getAllRentalCompanies() {
