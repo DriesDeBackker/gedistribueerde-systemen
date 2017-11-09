@@ -29,20 +29,17 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
 
     @Override
     protected Set<String> getBestClients(ManagerSessionRemote session) throws Exception {
-        ManagerSessionRemote ms = (ManagerSessionRemote)session;
-        return ms.getBestClients();
+        return session.getBestClients();
     }
 
     @Override
     protected String getCheapestCarType(CarRentalSessionRemote session, Date start, Date end, String region) throws Exception {
-        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
-        return rs.getCheapestCarType(start, end, region);
+        return session.getCheapestCarType(start, end, region);
     }
 
     @Override
     protected CarType getMostPopularCarTypeIn(ManagerSessionRemote session, String carRentalCompanyName, int year) throws Exception {
-        ManagerSessionRemote ms = (ManagerSessionRemote)session;
-        return ms.getMostPopularCarTypeIn(carRentalCompanyName, year);
+        return session.getMostPopularCarTypeIn(carRentalCompanyName, year);
     }
 
     @Override
@@ -64,26 +61,22 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
 
     @Override
     protected void checkForAvailableCarTypes(CarRentalSessionRemote session, Date start, Date end) throws Exception {
-        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
-        rs.checkForAvailableCarTypes(start, end);
+        session.checkForAvailableCarTypes(start, end);
     }
 
     @Override
     protected void addQuoteToSession(CarRentalSessionRemote session, String name, Date start, Date end, String carType, String region) throws Exception {
-        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;  
         ReservationConstraints constraints = new ReservationConstraints(start, end,carType, region);
-        rs.addQuote(constraints);
+        session.addQuote(constraints);
     }
 
     @Override
     protected List<Reservation> confirmQuotes(CarRentalSessionRemote session, String name) throws Exception {
-        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
-        return rs.confirmQuotes();
+        return session.confirmQuotes();
     }
 
     @Override
     protected int getNumberOfReservationsForCarType(ManagerSessionRemote session, String carRentalName, String carType) throws Exception {
-        ManagerSessionRemote ms = (ManagerSessionRemote)session;
-        return ms.getNumberOfReservations(carRentalName, carType);
+        return session.getNumberOfReservations(carRentalName, carType);
     }
 }
