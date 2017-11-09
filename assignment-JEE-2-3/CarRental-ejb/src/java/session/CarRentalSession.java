@@ -25,7 +25,6 @@ public class CarRentalSession implements CarRentalSessionRemote {
         return new HashSet<String>(RentalStore.getRentals().keySet());
     }
     
-    @Override
     public List<CarType> getAvailableCarTypes(Date start, Date end) {
         List<CarType> availableCarTypes = new LinkedList<CarType>();
         for(String crc : getAllRentalCompanies()) {
@@ -37,7 +36,11 @@ public class CarRentalSession implements CarRentalSessionRemote {
         return availableCarTypes;
     }
 
-    @Override
+    public Quote addQuote(ReservationConstraints constraints) {
+        //TODO: implement
+        return null;
+    }
+    
     public Quote createQuote(String company, ReservationConstraints constraints) throws ReservationException {
         try {
             Quote out = RentalStore.getRental(company).createQuote(constraints, renter);
@@ -74,5 +77,17 @@ public class CarRentalSession implements CarRentalSessionRemote {
             throw new IllegalStateException("name already set");
         }
         renter = name;
+    }
+
+    @Override
+    public void checkForAvailableCarTypes(Date start, Date end) {
+        List<CarType> carTypesList = this.getAvailableCarTypes(start, end);
+        this.availableCarTypes.clear();
+        this.availableCarTypes.addAll(carTypesList);
+    }
+
+    @Override
+    public String getCheapestCarType(Date start, Date end, String region) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

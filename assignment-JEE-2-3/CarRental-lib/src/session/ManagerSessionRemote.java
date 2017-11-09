@@ -19,5 +19,8 @@ public interface ManagerSessionRemote {
     public void setCompanyName(String carRentalName);
     
     public void setName(String name);
-      
+
+    public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year);
+
+    public Set<String> getBestClients();
 }

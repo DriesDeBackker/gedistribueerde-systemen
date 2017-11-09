@@ -28,18 +28,21 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
     }
 
     @Override
-    protected Set<String> getBestClients(ManagerSessionRemote ms) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected Set<String> getBestClients(ManagerSessionRemote session) throws Exception {
+        ManagerSessionRemote ms = (ManagerSessionRemote)session;
+        return ms.getBestClients();
     }
 
     @Override
     protected String getCheapestCarType(CarRentalSessionRemote session, Date start, Date end, String region) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
+        return rs.getCheapestCarType(start, end, region);
     }
 
     @Override
-    protected CarType getMostPopularCarTypeIn(ManagerSessionRemote ms, String carRentalCompanyName, int year) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected CarType getMostPopularCarTypeIn(ManagerSessionRemote session, String carRentalCompanyName, int year) throws Exception {
+        ManagerSessionRemote ms = (ManagerSessionRemote)session;
+        return ms.getMostPopularCarTypeIn(carRentalCompanyName, year);
     }
 
     @Override
@@ -67,16 +70,20 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
 
     @Override
     protected void addQuoteToSession(CarRentalSessionRemote session, String name, Date start, Date end, String carType, String region) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;  
+        ReservationConstraints constraints = new ReservationConstraints(start, end,carType, region);
+        rs.addQuote(constraints);
     }
 
     @Override
     protected List<Reservation> confirmQuotes(CarRentalSessionRemote session, String name) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CarRentalSessionRemote rs = (CarRentalSessionRemote)session;
+        return rs.confirmQuotes();
     }
 
     @Override
-    protected int getNumberOfReservationsForCarType(ManagerSessionRemote ms, String carRentalName, String carType) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected int getNumberOfReservationsForCarType(ManagerSessionRemote session, String carRentalName, String carType) throws Exception {
+        ManagerSessionRemote ms = (ManagerSessionRemote)session;
+        return ms.getNumberOfReservations(carRentalName, carType);
     }
 }

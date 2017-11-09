@@ -13,6 +13,9 @@ import rental.Reservation;
 
 @Stateless
 public class ManagerSession implements ManagerSessionRemote {
+
+    private String name;
+    private String carRentalName;
     
     @Override
     public Set<CarType> getCarTypes(String company) {
@@ -62,4 +65,23 @@ public class ManagerSession implements ManagerSessionRemote {
         return out.size();
     }
 
+    @Override
+    public void setCompanyName(String carRentalName) {
+        this.carRentalName = carRentalName;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<String> getBestClients() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
