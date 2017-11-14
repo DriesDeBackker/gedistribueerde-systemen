@@ -26,8 +26,9 @@ public class Quote implements Serializable {
         this.carRenter = carRenter;
         this.startDate = start;
         this.endDate = end;
-        this.rentalCompany = rentalCompany;
-        this.carType = carType;
+        
+        //this.rentalCompany = rentalCompany;
+        //this.carType = carType;
         this.rentalPrice = rentalPrice;
     }
 
