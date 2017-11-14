@@ -79,4 +79,20 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
     protected int getNumberOfReservationsForCarType(ManagerSessionRemote session, String carRentalName, String carType) throws Exception {
         return session.getNumberOfReservations(carRentalName, carType);
     }
+    
+    protected void loadCompanyFromData(ManagerSessionRemote session, String companyName) {
+        session.loadCompanyFromData(companyName);
+    }
+    
+    protected void registerCompany(ManagerSessionRemote session, String companyName) {
+        session.registerCompany(companyName);
+    }
+    
+    protected void registerCarType(ManagerSessionRemote session, String name, int nbOfSeats, float trunkSpace, double rentalPricePerDay, boolean smokingAllowed) {
+        session.registerCarType(name, nbOfSeats, trunkSpace, rentalPricePerDay, smokingAllowed);
+    }
+    
+    protected void registerCar(ManagerSessionRemote session, String carTypeName) {
+        session.registerCar(carTypeName);
+    }
 }

@@ -1,6 +1,7 @@
 package session;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,5 +86,26 @@ public class ManagerSession implements ManagerSessionRemote {
     @Override
     public Set<String> getBestClients() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void registerCompany(String companyName) {
+        //TODO
+    }
+
+    @Override
+    public void registerCar(String carTypeName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void registerCarType(String name, int nbOfSeats, float trunkSpace, double rentalPricePerDay, boolean smokingAllowed) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void loadCompanyFromData(String companyName) {
+        Map<String, CarRentalCompany> companies = RentalStore.getRentals();
+        
     }
 }
