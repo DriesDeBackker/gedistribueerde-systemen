@@ -107,5 +107,6 @@ public class ManagerSession implements ManagerSessionRemote {
     public void loadCompanyFromData(String companyName) {
         Map<String, CarRentalCompany> companies = RentalStore.getRentals();
         
+        
     }
 }

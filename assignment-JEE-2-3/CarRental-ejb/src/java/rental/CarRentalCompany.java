@@ -197,4 +197,8 @@ public class CarRentalCompany {
         }
         return out;
     }
+
+    public boolean hasRegion(String region) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
