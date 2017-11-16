@@ -8,9 +8,7 @@ import java.util.Set;
 import javax.ejb.Stateful;
 import rental.CarRentalCompany;
 import rental.CarType;
-import rental.PersistenceManager;
 import rental.Quote;
-import rental.RentalStore;
 import rental.Reservation;
 import rental.ReservationConstraints;
 import rental.ReservationException;
@@ -21,14 +19,15 @@ public class CarRentalSession implements CarRentalSessionRemote {
     private String renter;
     private List<Quote> quotes = new LinkedList<Quote>();
     private Set<CarType> availableCarTypes;
-    private PersistenceManager pm;
 
     @Override
     public Set<String> getAllRentalCompanies() {
-        return new HashSet<String>(pm.getRentalCompanyNames());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     public List<CarType> getAvailableCarTypes(Date start, Date end) {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*
         List<CarType> availableCarTypes = new LinkedList<CarType>();
         for(String crc : getAllRentalCompanies()) {
             //TODO: rewrite with direct queries
@@ -38,10 +37,13 @@ public class CarRentalSession implements CarRentalSessionRemote {
             }
         }
         return availableCarTypes;
+        */
     }
     
     //OK
     public Quote addQuote(ReservationConstraints constraints) throws ReservationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*
         List<CarRentalCompany> companies = pm.getRentalCompanies();
         for (CarRentalCompany company : companies) {
             try {
@@ -51,10 +53,13 @@ public class CarRentalSession implements CarRentalSessionRemote {
             }
         }
         throw new ReservationException("<No cars available in any company to satisfy the given constraints.");
+        */
     }
     
     //OK
     public Quote createQuote(String company, ReservationConstraints constraints) throws ReservationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*
         try {
             Quote out = pm.getCarRentalCompany(company).createQuote(constraints, renter);
             quotes.add(out);
@@ -62,6 +67,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
         } catch(Exception e) {
             throw new ReservationException(e);
         }
+        */
     }
     
     //OK
@@ -73,6 +79,8 @@ public class CarRentalSession implements CarRentalSessionRemote {
     //TODO: queries in transaction style??
     @Override
     public List<Reservation> confirmQuotes() throws ReservationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*
         List<Reservation> done = new LinkedList<Reservation>();
         try {
             for (Quote quote : quotes) {
@@ -85,6 +93,7 @@ public class CarRentalSession implements CarRentalSessionRemote {
             throw new ReservationException(e);
         }
         return done;
+        */
     }
     
     //OK
@@ -107,7 +116,10 @@ public class CarRentalSession implements CarRentalSessionRemote {
     //OK
     @Override
     public String getCheapestCarType(Date start, Date end, String region) {
+        throw new UnsupportedOperationException("Not supported yet.");
+        /*
         List<CarType> carTypes = pm.getCarTypesOrderedByPrice();
         return carTypes.get(0).getName();
+        */
     }
 }

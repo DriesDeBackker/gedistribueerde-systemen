@@ -22,9 +22,10 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
         super(scriptFile);
     }
 
-    public static void main(String[] args) throws Exception {
-        // TODO: use updated manager interface to load cars into companies
-        new Main("trips").run();
+    static void main(String[] args) throws Exception {
+        Main main = new Main("trips");
+        main.getNewManagerSession("name", "carRentalName").loadCompanyFromData();
+        main.run();
     }
 
     @Override
@@ -80,19 +81,20 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
         return session.getNumberOfReservations(carRentalName, carType);
     }
     
-    protected void loadCompanyFromData(ManagerSessionRemote session, String companyName) {
-        session.loadCompanyFromData(companyName);
+    protected void loadCompanyFromData(ManagerSessionRemote session) {
+        session.loadCompanyFromData();
     }
     
-    protected void registerCompany(ManagerSessionRemote session, String companyName) {
-        session.registerCompany(companyName);
+    protected void registerCompany(ManagerSessionRemote session, String companyName, List<String> regions) {
+        session.registerCompany(companyName, regions);
     }
     
-    protected void registerCarType(ManagerSessionRemote session, String name, int nbOfSeats, float trunkSpace, double rentalPricePerDay, boolean smokingAllowed) {
-        session.registerCarType(name, nbOfSeats, trunkSpace, rentalPricePerDay, smokingAllowed);
+    protected void registerCarType(ManagerSessionRemote session, String name, int nbOfSeats, float trunkSpace, double rentalPricePerDay, boolean smokingAllowed, String companyName) {
+        CarType type = session.createCarType(name, nbOfSeats, trunkSpace, rentalPricePerDay, smokingAllowed, companyName);
+        session.registerCarType(type, companyName);
     }
     
-    protected void registerCar(ManagerSessionRemote session, String carTypeName) {
-        session.registerCar(carTypeName);
+    protected void registerCar(ManagerSessionRemote session, CarType type, int id, String companyName) {
+        session.registerCar(type,id,companyName);
     }
 }

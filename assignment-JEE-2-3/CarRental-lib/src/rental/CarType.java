@@ -2,18 +2,24 @@ package rental;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class CarType implements Serializable{
     
-    @Id
+    @Id //signifies the primary key
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String name;
     private int nbOfSeats;
     private boolean smokingAllowed;
     private double rentalPricePerDay;
     //trunk space in liters
     private float trunkSpace;
+    private String crcName;
+    
     
     /***************
      * CONSTRUCTOR *
@@ -21,25 +27,42 @@ public class CarType implements Serializable{
     
     public CarType() {}
     
-    public CarType(String name, int nbOfSeats, float trunkSpace, double rentalPricePerDay, boolean smokingAllowed) {
-        this.name = name;
-        this.nbOfSeats = nbOfSeats;
-        this.trunkSpace = trunkSpace;
-        this.rentalPricePerDay = rentalPricePerDay;
-        this.smokingAllowed = smokingAllowed;
-    }
 
     public String getName() {
     	return name;
     }
     
-    public void setName() {
+    public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getCrcName() {
+    	return crcName;
+    }
+    
+    public void setCrcName(String name) {
+        this.crcName = name;
     }
     
     public int getNbOfSeats() {
         return nbOfSeats;
     }
+    
+    public void setNbOfSeats(int n){
+        nbOfSeats = n;
+    }
+    
+        public void setSmokingAllowed(boolean smokingAllowed) {
+		this.smokingAllowed = smokingAllowed;
+	}
+
+	public void setRentalPricePerDay(double rentalPricePerDay) {
+		this.rentalPricePerDay = rentalPricePerDay;
+	}
+
+	public void setTrunkSpace(float trunkSpace) {
+		this.trunkSpace = trunkSpace;
+	}
     
     public boolean isSmokingAllowed() {
         return smokingAllowed;
@@ -83,7 +106,7 @@ public class CarType implements Serializable{
 	if (name == null) {
             if (other.name != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (id != other.id)
             return false;
 	return true;
     }

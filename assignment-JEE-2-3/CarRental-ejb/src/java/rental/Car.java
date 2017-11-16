@@ -4,20 +4,30 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import rental.CarType;
+import rental.CarType;
+import rental.Reservation;
+import rental.Reservation;
 
 @Entity
 public class Car {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private int carId;
     @ManyToOne
     private CarType type;
     @OneToMany
     private Set<Reservation> reservations;
+    @ManyToOne
+    private CarRentalCompany crc;
 
     /***************
      * CONSTRUCTOR *
@@ -25,11 +35,6 @@ public class Car {
     
     public Car(){}
     
-    public Car(int uid, CarType type) {
-    	this.id = uid;
-        this.type = type;
-        this.reservations = new HashSet<Reservation>();
-    }
 
     /******
      * ID *
@@ -39,6 +44,9 @@ public class Car {
     	return id;
     }
     
+    public void setId(int id){
+        this.id = id;
+    }
     /************
      * CAR TYPE *
      ************/
@@ -81,5 +89,13 @@ public class Car {
     //TODO query involvement?
     public Set<Reservation> getReservations() {
         return reservations;
+    }
+
+    public void setCarId(int i) {
+        carId = i;
+    }
+    
+    public int getCarId(){
+        return carId;
     }
 }

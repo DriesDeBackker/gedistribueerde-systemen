@@ -16,12 +16,11 @@ import javax.persistence.OneToMany;
 @Entity
 public class CarRentalCompany {
 
-    private static Logger logger = Logger.getLogger(CarRentalCompany.class.getName());
     @Id
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "crc",targetEntity = Car.class)
     private List<Car> cars;
-    @ManyToMany
+    @OneToMany
     private Set<CarType> carTypes = new HashSet<CarType>();
     private List<String> regions;
 
@@ -31,16 +30,6 @@ public class CarRentalCompany {
      ***************/
     
     public CarRentalCompany() {}
-    
-    public CarRentalCompany(String name, List<String> regions, List<Car> cars) {
-        logger.log(Level.INFO, "<{0}> Car Rental Company {0} starting up...", name);
-        setName(name);
-        this.cars = cars;
-        setRegions(regions);
-        for (Car car : cars) {
-            carTypes.add(car.getType());
-        }
-    }
 
     /********
      * NAME *
@@ -50,14 +39,14 @@ public class CarRentalCompany {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     /***********
      * Regions *
      **********/
-    private void setRegions(List<String> regions) {
+    public void setRegions(List<String> regions) {
         this.regions = regions;
     }
     
@@ -69,10 +58,19 @@ public class CarRentalCompany {
      * CAR TYPES *
      *************/
     
-    public Collection<CarType> getAllTypes() {
+    public Set<CarType> getCarTypes() {
         return carTypes;
     }
-
+    
+    public void setCarTypes(Set<CarType> types){
+        carTypes = types; 
+    }
+    
+    public void addCarType(CarType type){
+        carTypes.add(type);
+    }
+    
+    /*
     public CarType getType(String carTypeName) {
         for(CarType type:carTypes){
             if(type.getName().equals(carTypeName))
@@ -80,12 +78,16 @@ public class CarRentalCompany {
         }
         throw new IllegalArgumentException("<" + carTypeName + "> No cartype of name " + carTypeName);
     }
-
+    */
+    
+    /*
     public boolean isAvailable(String carTypeName, Date start, Date end) {
         logger.log(Level.INFO, "<{0}> Checking availability for car type {1}", new Object[]{name, carTypeName});
         return getAvailableCarTypes(start, end).contains(getType(carTypeName));
     }
-
+    */
+    
+    /*
     public Set<CarType> getAvailableCarTypes(Date start, Date end) {
         Set<CarType> availableCarTypes = new HashSet<CarType>();
         for (Car car : cars) {
@@ -95,11 +97,25 @@ public class CarRentalCompany {
         }
         return availableCarTypes;
     }
+    */
 
     /*********
      * CARS *
      *********/
     
+    public List<Car> getCars(){
+        return cars;
+    }
+    
+    public void setCars(List<Car> carList){
+        cars = carList;
+    }
+    
+    public void addCar(Car car){
+        cars.add(car);
+    }
+    
+    /*
     public Car getCar(int uid) {
         for (Car car : cars) {
             if (car.getId() == uid) {
@@ -138,11 +154,13 @@ public class CarRentalCompany {
         }
         return availableCars;
     }
-
+    */
+    
     /****************
      * RESERVATIONS *
      ****************/
     
+    /*
     public Quote createQuote(ReservationConstraints constraints, String guest)
             throws ReservationException {
         logger.log(Level.INFO, "<{0}> Creating tentative reservation for {1} with constraints {2}",
@@ -201,4 +219,5 @@ public class CarRentalCompany {
     public boolean hasRegion(String region) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    */
 }
