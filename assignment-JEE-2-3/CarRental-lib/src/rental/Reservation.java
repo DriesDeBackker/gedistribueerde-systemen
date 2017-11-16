@@ -1,11 +1,12 @@
 package rental;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Reservation extends Quote {
+public class Reservation extends Quote implements Serializable {
     
     @Id
     private int reservationId;

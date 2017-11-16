@@ -134,9 +134,11 @@ public class ManagerSession implements ManagerSessionRemote {
         Car car = createCar(type,id);
         CarRentalCompany crc = em.find(CarRentalCompany.class, crcName);
         crc.addCar(car);
+        car.setCrc(crc);
         try {
             userTransaction.begin();
-            em.persist(crc);
+            em.merge(crc);
+            em.merge(car);
             userTransaction.commit();
         }
         catch(Exception e){
@@ -150,7 +152,7 @@ public class ManagerSession implements ManagerSessionRemote {
         crc.addCarType(type);
         try {
             userTransaction.begin();
-            em.persist(crc);
+            em.merge(crc);
             userTransaction.commit();
         }
         catch(Exception e){

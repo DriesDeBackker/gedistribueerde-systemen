@@ -1,5 +1,6 @@
 package rental;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ import rental.Reservation;
 import rental.Reservation;
 
 @Entity
-public class Car {
+public class Car implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +35,14 @@ public class Car {
      ***************/
     
     public Car(){}
+    
+    public CarRentalCompany getCrc (){
+        return crc;
+    }
+    
+    public void setCrc(CarRentalCompany crc){
+        this.crc = crc;
+    }
     
 
     /******
@@ -61,7 +70,7 @@ public class Car {
     /****************
      * RESERVATIONS *
      ****************/
-        
+    /*
     //TODO: query involvement?
     public boolean isAvailable(Date start, Date end) {
         if(!start.before(end))
@@ -86,11 +95,12 @@ public class Car {
         reservations.remove(reservation);
     }
     
+    */
     //TODO query involvement?
     public Set<Reservation> getReservations() {
         return reservations;
     }
-
+    
     public void setCarId(int i) {
         carId = i;
     }

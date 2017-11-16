@@ -22,9 +22,10 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
         super(scriptFile);
     }
 
-    static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Main main = new Main("trips");
         main.getNewManagerSession("name", "carRentalName").loadCompanyFromData();
+        System.out.println("line3");
         main.run();
     }
 
