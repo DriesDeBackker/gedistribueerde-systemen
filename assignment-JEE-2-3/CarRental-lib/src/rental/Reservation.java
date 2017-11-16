@@ -2,13 +2,15 @@ package rental;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Reservation extends Quote implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int reservationId;
     private int carId;
     
@@ -24,9 +26,11 @@ public class Reservation extends Quote implements Serializable {
         this.carId = carId;
     }
     
+    /*
     public void initReservationId() {
         this.reservationId = this.hashCode();
     }
+    */
     
     public int getReservationId() {
         return this.reservationId;
@@ -75,7 +79,7 @@ public class Reservation extends Quote implements Serializable {
             return false;
         }
         final Reservation other = (Reservation) obj;
-        if (this.carId != other.carId) {
+        if (this.reservationId != other.reservationId) {
             return false;
         }
         return true;

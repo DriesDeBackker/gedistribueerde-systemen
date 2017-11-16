@@ -11,8 +11,6 @@ public interface ManagerSessionRemote {
     
     public Set<CarType> getCarTypes(String company);
     
-    public int getNumberOfReservations(String company, String type, int carId);
-    
     public int getNumberOfReservations(String company, String type);
 
     public void setCompanyName(String carRentalName);

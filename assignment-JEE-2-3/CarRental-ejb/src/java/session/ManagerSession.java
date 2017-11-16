@@ -4,7 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -42,8 +47,8 @@ public class ManagerSession implements ManagerSessionRemote {
     }
 
     @Override
-    public int getNumberOfReservations(String company, String type, int id) {
-        Query query = em.createQuery("SELECT c FROM Car c WHERE c.crc = :company AND c.type.name = :type AND c.carId = :id");
+    public int getNumberOfReservations(String company, String type) {
+        Query query = em.createQuery("SELECT c FROM Car c WHERE c.crc = :company AND c.type.name = :type");
         List<Car> list=(List<Car>)query.getResultList( );
         int n = 0;
         for(Car c : list){
@@ -51,12 +56,26 @@ public class ManagerSession implements ManagerSessionRemote {
         }
         return n;
     }
-
-    @Override
-    public int getNumberOfReservations(String company, String type) {
-        Query query = em.createQuery("SELECT c FROM Car c WHERE c.crc = :company AND c.type.name = :type");
-        Car car =  (Car) query.getSingleResult();
-        return car.getReservations().size();
+    
+    
+    public int getNumberOfReservationsIn(CarType type, int year) {
+        Query query = em.createQuery("SELECT c FROM Car c WHERE c.type = :type");
+        List<Car> list=(List<Car>)query.getResultList( );
+        int n = 0;
+        for(Car car : list){
+            if (!car.getReservations().isEmpty()) {
+		for (Reservation res : car.getReservations()) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(res.getStartDate());
+                    int yearres = cal.get(Calendar.YEAR);
+                    if (yearres == year) {
+			n=+1;
+                    	}
+                    }
+					
+		}		
+            }
+        return n;      
     }
 
     @Override
@@ -70,13 +89,39 @@ public class ManagerSession implements ManagerSessionRemote {
     }
 
     @Override
-    public CarType getMostPopularCarTypeIn(String carRentalCompanyName, int year) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CarType getMostPopularCarTypeIn(String companyName, int year) {
+        Query query = em.createQuery("SELECT t FROM CarType t WHERE t.crcName = :companyName");
+        List<CarType> list=(List<CarType>)query.getResultList( );
+	int max = 0;
+	CarType popular = null;
+	for (CarType type : list) {
+            int n = getNumberOfReservationsIn(type,year);
+            if (n > max) {
+		popular = type;
+            }
+	}
+	return popular;
     }
 
     @Override
     public Set<String> getBestClients() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	HashMap<String, Integer> clientres = new HashMap<String,Integer>();
+        Query query = em.createQuery("SELECT DISTINCT (r.carRenter) FROM Reservation r");
+        List<String> list=(List<String>)query.getResultList( );
+		for (String renter : list) {
+                    Query query2 = em.createQuery("SELECT r FROM Reservation r WHERE r.carRenter = :renter");
+                    List<Reservation> list2=(List<Reservation>)query.getResultList( );
+                    int res = list2.size();
+                    clientres.put(renter,res);
+		}
+	Set<String> bestClients = new HashSet<String>();
+        int maxValueInMap=(Collections.max(clientres.values()));  
+        for (Entry<String, Integer> entry : clientres.entrySet()) {  
+            if (entry.getValue()==maxValueInMap) {
+               bestClients.add(entry.getKey());
+            }
+        }
+	return bestClients;
     }
 
     @Override
