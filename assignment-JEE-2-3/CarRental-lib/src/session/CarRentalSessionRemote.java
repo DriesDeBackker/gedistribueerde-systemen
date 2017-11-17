@@ -15,15 +15,15 @@ public interface CarRentalSessionRemote {
     
     public void setRenterName(String name);
     
-    public Set<String> getAllRentalCompanies();
+    public Set<String> getAllRentalCompaniesNames();
     
-    public void checkForAvailableCarTypes(Date start, Date end);
+    public Set<CarType> checkForAvailableCarTypes(Date start, Date end);
     
     public Quote addQuote(ReservationConstraints constraints) throws ReservationException;
     
     public List<Quote> getCurrentQuotes();
     
-    public List<Reservation> confirmQuotes() throws ReservationException;
+    public List<Reservation> confirmQuotes() throws ReservationException, Exception;
 
     public String getCheapestCarType(Date start, Date end, String region);
     

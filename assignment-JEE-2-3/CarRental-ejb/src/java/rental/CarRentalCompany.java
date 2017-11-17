@@ -216,9 +216,9 @@ public class CarRentalCompany implements Serializable{
         }
         return out;
     }
-
-    public boolean hasRegion(String region) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     */
+    public boolean hasRegion(String region) {
+        return this.regions.contains(region);
+    }
+    
 }

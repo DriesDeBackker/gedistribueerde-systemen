@@ -25,7 +25,6 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
     public static void main(String[] args) throws Exception {
         Main main = new Main("trips");
         main.getNewManagerSession("name", "carRentalName").loadCompanyFromData();
-        System.out.println("line3");
         main.run();
     }
 
@@ -63,7 +62,14 @@ public class Main extends AbstractTestManagement<CarRentalSessionRemote, Manager
 
     @Override
     protected void checkForAvailableCarTypes(CarRentalSessionRemote session, Date start, Date end) throws Exception {
-        session.checkForAvailableCarTypes(start, end);
+        try{
+            Set<CarType> carTypes = session.checkForAvailableCarTypes(start, end);
+            for (CarType type : carTypes){
+                System.out.println(type.toString());
+            }
+	} catch(Exception e) {
+		throw new UnsupportedOperationException(e.toString());
+	}
     }
 
     @Override

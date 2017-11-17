@@ -70,8 +70,7 @@ public class Car implements Serializable{
     /****************
      * RESERVATIONS *
      ****************/
-    /*
-    //TODO: query involvement?
+
     public boolean isAvailable(Date start, Date end) {
         if(!start.before(end))
             throw new IllegalArgumentException("Illegal given period");
@@ -84,18 +83,14 @@ public class Car implements Serializable{
         return true;
     }
     
-    //TODO query involvement?
     public void addReservation(Reservation res) {
         reservations.add(res);
     }
     
-    //TODO query involvement?
     public void removeReservation(Reservation reservation) {
-        // equals-method for Reservation is required!
         reservations.remove(reservation);
     }
     
-    */
     //TODO query involvement?
     public Set<Reservation> getReservations() {
         return reservations;

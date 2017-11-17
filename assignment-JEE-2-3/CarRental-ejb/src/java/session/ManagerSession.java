@@ -48,7 +48,8 @@ public class ManagerSession implements ManagerSessionRemote {
 
     @Override
     public int getNumberOfReservations(String company, String type) {
-        Query query = em.createQuery("SELECT c FROM Car c WHERE c.crc = :company AND c.type.name = :type");
+        Query query = em.createQuery("SELECT c FROM Car c WHERE c.crc.name = :company AND c.type.name = :type")
+        .setParameter("company",company).setParameter("type",type);
         List<Car> list=(List<Car>)query.getResultList( );
         int n = 0;
         for(Car c : list){
@@ -59,7 +60,8 @@ public class ManagerSession implements ManagerSessionRemote {
     
     
     public int getNumberOfReservationsIn(CarType type, int year) {
-        Query query = em.createQuery("SELECT c FROM Car c WHERE c.type = :type");
+        Query query = em.createQuery("SELECT c FROM Car c WHERE c.type = :type")
+        .setParameter("type",type);
         List<Car> list=(List<Car>)query.getResultList( );
         int n = 0;
         for(Car car : list){
@@ -90,7 +92,8 @@ public class ManagerSession implements ManagerSessionRemote {
 
     @Override
     public CarType getMostPopularCarTypeIn(String companyName, int year) {
-        Query query = em.createQuery("SELECT t FROM CarType t WHERE t.crcName = :companyName");
+        Query query = em.createQuery("SELECT t FROM CarType t WHERE t.crcName = :companyName")
+        .setParameter("companyName",companyName);
         List<CarType> list=(List<CarType>)query.getResultList( );
 	int max = 0;
 	CarType popular = null;
@@ -109,7 +112,8 @@ public class ManagerSession implements ManagerSessionRemote {
         Query query = em.createQuery("SELECT DISTINCT (r.carRenter) FROM Reservation r");
         List<String> list=(List<String>)query.getResultList( );
 		for (String renter : list) {
-                    Query query2 = em.createQuery("SELECT r FROM Reservation r WHERE r.carRenter = :renter");
+                    Query query2 = em.createQuery("SELECT r FROM Reservation r WHERE r.carRenter = :renter")
+                    .setParameter("renter",renter);
                     List<Reservation> list2=(List<Reservation>)query.getResultList( );
                     int res = list2.size();
                     clientres.put(renter,res);
